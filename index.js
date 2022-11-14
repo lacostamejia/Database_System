@@ -32,3 +32,8 @@ signUp.addEventListener("click", ( )=>{
 login.addEventListener("click", ( )=>{
   container.classList.remove("active");
 });
+
+function login_function(){
+  location.href = 'survey.html';
+}
+

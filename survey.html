@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Survey</title>
+    <link rel="stylesheet" href="survey.css">
+</head>
+<body>
+    <div class="wrapper">
+        <div class="title-text">
+           <div class="title login">
+              Create a Survey
+           </div>
+        </div>
+        <div class="form-container">
+           <div class="form-inner">
+              <form action="#" class="login">
+                 <div class="field">
+                    <input type="text" id = "name_survey" placeholder="Name of the Survey" required>
+                 </div>
+                 <div class="field btn">
+                    <div class="btn-layer"></div>
+                    <input type="button" id = "btnAdd" value="Create" onclick="addItem()">
+                 </div>
+              </form>
+           </div>
+        </div>
+     </div>
+
+     <div class = "wrapper_2">
+        <h3 style="color: black; text-align:center; text-decoration: underline;">Surveys</h3>
+        <ul id="surveys">
+
+        </ul>
+
+     </div>
+    <script src="survey.js"></script>
+    
+
+</body>
+</html>
