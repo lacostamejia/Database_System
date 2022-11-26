@@ -32,27 +32,26 @@
             <label for="type2"> 1 - 10 Rate</label><br>
             <input type="checkbox" id="type3" name="type3" value="type3" onclick="third_choice()">
             <label for="type3"> Text</label><br><br>
-
+            
           <div id="first" style = "display: none;">
             <label for="quantity">Number of Questions (1)</label>
-            <input type="number" id="quantity" name="quantity">
+            <input type="number" id="quantity" name="quantity" min = "1">
           </div>
 
           <div id="second" style = "display: none;">
             <label for="quantity2">Number of Questions (2)</label>
-            <input type="number" id="quantity2" name="quantity2">
+            <input type="number" id="quantity2" name="quantity2" min = "1" >
           </div>
 
           <div id="third" style = "display: none;">
             <label for="quantity3">Number of Questions (3)</label>
-            <input type="number" id="quantity3" name="quantity3">
+            <input type="number" id="quantity3" name="quantity3" min = "1">
           </div>
 
           <div class="field btn">
             <div class="btn-layer"></div>
             <input type="button" id="btnAdd" value="Create" onclick="addItem()" />
           </div>
-        </form>
       </div>
     </div>
   </div>
