@@ -113,7 +113,7 @@ function login_function() {
         saveCookie();
 
         // Move to the next html page surveys
-        // location.href = "survey.html";
+        location.href = "survey.html";
       }
     };
 
@@ -137,7 +137,7 @@ function register_function() {
 
   // Handle form entry
   for (const [key, value] of data) {
-    console.log(`${key}: ${value}`);
+    // console.log(`${key}: ${value}`);
 
     // Trims spaces off front and back of entries
     data[key] = value.trim();
@@ -200,7 +200,7 @@ function register_function() {
         saveCookie();
 
         // Move to the next html page surveys
-        // location.href = "survey.html";
+        location.href = "survey.html";
       }
     };
 
