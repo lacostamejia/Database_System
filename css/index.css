@@ -8,13 +8,13 @@
   font-family: "Poppins", sans-serif;
 }
 
-html,
 body {
   height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-image: url("https://images.wallpapersden.com/image/download/blue-abstract-shape-neon-lines_bGVpamiUmZqaraWkpJRnZWltrWZmamc.jpg");
+  background-image: url("../images/image_background.jpg");
+  /* background-image: url("https://images.wallpapersden.com/image/download/blue-abstract-shape-neon-lines_bGVpamiUmZqaraWkpJRnZWltrWZmamc.jpg"); */
 }
 
 /* .photo_container {} */
@@ -113,7 +113,7 @@ body {
   transition: all 0.2s ease;
 }
 
-.input-field input:is(:focus, :valid) ~ i {
+.input-field input:is(:focus, :valid)~i {
   color: #4070f4;
 }
 
