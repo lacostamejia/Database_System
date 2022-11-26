@@ -36,9 +36,6 @@ try {
     $retValue = '{"error":"No Records Found"}';
     echo $retValue;
   }
-  // $updateDate->null;
-  // $stmt->null;
-  // $db->null;
 } catch (PDOException $e) {
   $retValue = '{"error":"' . $e->getMessage() . '"}';
   echo $retValue;
