@@ -12,11 +12,9 @@ CREATE TABLE users (
     DateLastLoggedIn DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FirstName VARCHAR(50) NOT NULL DEFAULT '',
     LastName VARCHAR(50) NOT NULL DEFAULT '',
-    Username VARCHAR(50) UNIQUE NOT NULL DEFAULT '',
     Email VARCHAR(50) UNIQUE NOT NULL DEFAULT '',
     Password VARCHAR(50) NOT NULL DEFAULT '',
-    PRIMARY KEY (UserID),
-    INDEX login (Username)
+    PRIMARY KEY (UserID)
 );
 
 -- Survey Table
