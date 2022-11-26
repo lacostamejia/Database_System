@@ -4,8 +4,7 @@ const container = document.querySelector(".container"),
   signUp = document.querySelector(".signup-link"),
   login = document.querySelector(".login-link");
 
-// const urlBase = "http://petrillo.zone/api";
-const urlBase = "http://127.0.0.1:5500/api";
+const urlBase = "http://petrillo.zone/api";
 const ext = "php";
 
 // js code to show/hide password and change icon
@@ -76,7 +75,7 @@ function login_function() {
 
   // Convert to JSON
   const formJson = JSON.stringify(data);
-  console.log(formJson);
+  // console.log(formJson);
 
   // Handle api call
   var xhr = new XMLHttpRequest();
