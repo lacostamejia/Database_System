@@ -217,13 +217,5 @@ function saveCookie() {
   let minutes = 20;
   let date = new Date();
   date.setTime(date.getTime() + minutes * 60 * 1000);
-  document.cookie =
-    "FirstName=" +
-    FirstName +
-    ",LastName=" +
-    LastName +
-    ",UserID=" +
-    UserID +
-    ";expires=" +
-    date.toGMTString();
+  document.cookie = "UserID=" + UserID + ",FirstName=" + FirstName + ",LastName=" + LastName + ";expires=" + date.toGMTString();
 }

@@ -40,7 +40,7 @@ try {
     $retValue = '{"UserID":' . $result["UserID"] . ',"FirstName":"' . $result["FirstName"] . '","LastName":"' . $result["LastName"] . '","error":""}';
     echo $retValue;
   } else {
-    $retValue = '{"error":"Login already in use"}';
+    $retValue = '{"error":"Email already in use"}';
     echo $retValue;
   }
 } catch (PDOException $e) {
