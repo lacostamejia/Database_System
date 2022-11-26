@@ -7,6 +7,12 @@ include_once './Database.php';
 $database = new Database();
 $db = $database->connect();
 
+// Headers
+header('Access-Control-Allow-Origin: *');
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
+header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, X-Requested-With");
+header('Content-Type: application/json');
+
 // Convert incoming json to variable
 $inData = json_decode(file_get_contents('php://input'), true);
 
@@ -25,18 +31,15 @@ try {
 
     // Return the users first name, last name, and ID.
     $retValue = '{"UserID":' . $result["UserID"] . ',"FirstName":"' . $result["FirstName"] . '","LastName":"' . $result["LastName"] . '","error":""}';
-    header('Content-type: application/json');
     echo $retValue;
   } else {
     $retValue = '{"error":"No Records Found"}';
-    header('Content-type: application/json');
     echo $retValue;
   }
-  $updateDate->null;
-  $stmt->null;
-  $db->null;
+  // $updateDate->null;
+  // $stmt->null;
+  // $db->null;
 } catch (PDOException $e) {
   $retValue = '{"error":"' . $e->getMessage() . '"}';
-  header('Content-type: application/json');
   echo $retValue;
 }
