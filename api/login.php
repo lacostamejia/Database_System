@@ -21,13 +21,13 @@ try {
   // Attempt to find the user matching the given credentials.
   $stmt = $db->prepare("SELECT UserID,FirstName,LastName FROM users WHERE Email=? AND Password=?");
   $stmt->execute([$inData["Email"], $inData["Password"]]);
-  $result = $stmt->fetchAll();
+  $result = $stmt->fetch();
 
   // Check if returned query is empty
   if (!empty($result)) {
     // Update the DateLastLoggedIn field.
     $updateDate = $db->prepare("UPDATE users SET DateLastLoggedIn=NOW() WHERE UserID=?");
-    $updateDate->execute($result["UserID"]);
+    $updateDate->execute([$result["UserID"]]);
 
     // Return the users first name, last name, and ID.
     $retValue = '{"UserID":' . $result["UserID"] . ',"FirstName":"' . $result["FirstName"] . '","LastName":"' . $result["LastName"] . '","error":""}';
