@@ -20,7 +20,7 @@ $inData = json_decode(file_get_contents('php://input'), true);
 // Try to perfrom the query
 try {
 
-      $stmt = $db->prepare("INSERT INTO survey (Title,creatorID) VALUES (?,?)");
+      $stmt = $db->prepare("INSERT INTO surveys (Title,creatorID) VALUES (?,?)");
       $stmt->execute([$inData["Title"], $inData["creatorID"]]);
 
       $stmt = $db->prepare("SELECT SurveyID,Title,DateCreated,StartDate,EndDate FROM surveys WHERE creatorID=?");
