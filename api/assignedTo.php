@@ -28,7 +28,7 @@ try {
       $result = $stmt->fetch();
   
       // Return the users first name, last name, and ID.
-      $retValue = '{"surveyID":' . $result["surveyID"] . ',"UserID":"' . $result["Title"] . '","DateCreated":"' . $result["DateCreated"] . '","error":""}';
+      $retValue = '{"surveyID":' . $result["surveyID"] . ',"UserID":"' . $result["userID"] . '","DateCreated":"' . $result["DateCreated"] . '","error":""}';
       echo $retValue;
   } catch (PDOException $e) {
     $retValue = '{"error":"' . $e->getMessage() . '"}';
