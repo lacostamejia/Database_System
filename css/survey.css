@@ -212,7 +212,8 @@ form .btn input[type="button"] {
   position: relative;
   background: none;
   border: none;
-  color: #fff;
+  background-color: #008CBA;;
+  color: white;
   padding-left: 0;
   border-radius: 5px;
   font-size: 15px;
