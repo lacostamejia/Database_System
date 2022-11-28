@@ -10,7 +10,7 @@ const second_number = document.getElementById("quantity2");
 const third_number = document.getElementById("quantity3");
 
 
-function addItem(){
+function Next(){
 
     if(name_survey.value == ""){
         document.getElementById("name_survey").style.borderColor = "red";
@@ -51,14 +51,44 @@ function addItem(){
         document.getElementById("quantity3").style.borderColor = "green";
     }
 
+    askquestions(first_number.value,second_number.value,third_number.value);
+
+};
+
+
+function askquestions(x, y, z){
+
+    document.getElementById("creation_wrapper").style.display = "none";
+    document.getElementById("questions_wrapper").style.display = "block";
+
+    if(x !== null){
+        document.getElementById("divfirstquestions").style.display = "block";
+        for(var i = 0; i < x; i++){
+
+            var li = document.createElement("LI");
+            //Issue here
+            var input = document.createElement(<input type="text" placeholder="Question" required />);
+            li.innerHTML = input;
+            document.getElementById("list_questions1").appendChild(li);
+
+        }
+    }
+    clear();
+
+    document.getElementById("creation_wrapper").style.display = "block";
+    document.getElementById("questions_wrapper").style.display = "none";
+
+
+};
+
+function create(){
+
     var li = document.createElement("LI");  
     var input = document.getElementById("name_survey");
     li.innerHTML = input.value;
     input.value = "";
 
     document.getElementById("surveys").appendChild(li);
-
-    clear();
 }
 
 //Function that will clear all input values
@@ -77,8 +107,7 @@ function clear(){
    first_choice();
    second_choice();
    third_choice();
-}
-
+};
 
 
 function first_choice(){
@@ -107,3 +136,4 @@ function third_choice(){
         third.style.display = "none";
     }
 };
+
