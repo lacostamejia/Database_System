@@ -12,12 +12,16 @@
 
 <body>
 
+  <div class="log-out" onclick="logout()">
+    <p>Logout</p>
+  </div>
+
   <div class="title">
     <div class="container">
       <h1>Survey Homepage</h1>
+      <h2 id="user name"></h2>
       <p>Manage your surveys here</p>
     </div>
-
   </div>
 
   <div>
@@ -27,6 +31,9 @@
         <p>Create Your Surveys</p>
         <div class="input-field button">
           <input type="button" value="Create" onclick="location.href='survey.html'" />
+        </div>
+        <div>
+          <!-- Dynmaic list of created surveys -->
         </div>
       </div>
     </div>
@@ -58,6 +65,7 @@
     </div>
   </div>
 
+  <script src="./js/home.js"></script>
 </body>
 
 </html>
