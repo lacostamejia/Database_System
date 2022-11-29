@@ -100,6 +100,10 @@ body {
   transition: all 0.2s ease;
 }
 
+.input-field input:hover{
+  box-shadow: inset 0 0 100px rgba(red, green, blue, .01);
+}
+
 .input-field input:is(:focus, :valid) {
   border-bottom-color: #4070f4;
 }

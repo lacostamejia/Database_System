@@ -203,6 +203,8 @@ form .btn .btn-layer {
 
 form .btn:hover .btn-layer {
   left: 0;
+  box-shadow: inset 0 0 100px rgba(red, green, blue, .01);
+  
 }
 
 form .btn input[type="button"] {
