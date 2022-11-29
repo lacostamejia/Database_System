@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <script type="text/javascript" src="./js/md5.js"></script>
-  <link rel="stylesheet" href="./css/style.css" />
+  <link rel="stylesheet" href="./css/results.css" />
   <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" />
   <title>Survey Results</title>
 </head>
@@ -17,71 +17,38 @@
   <div class="container">
     <div class="forms">
       <div class="form login">
-        <span class="title">Login</span>
+        <span class="title">Results of surveys created</span>
 
-        <br /><br /><span id="login-result" class="invalid"></span>
-        <form id="login-form" onsubmit="return false;" action="#">
-          <div class="input-field">
-            <input name="Email" type="text" placeholder="What's your email?" required />
-            <i class="uil uil-envelope icon"></i>
-          </div>
-          <div class="input-field">
-            <input name="Password" type="password" class="password" placeholder="What's your password?" required />
-            <i class="uil uil-lock icon"></i>
-            <i class="uil uil-eye-slash showHidePw"></i>
-          </div>
+        <!-- <span>SurveyID:</span> <?php echo $row1['SurveyID']; ?>
+        <span>Date Created:</span> <?php echo $row1['DateCreated']; ?>
+        <span>Type 1 Answer:</span> <?php echo $row1['Type1']; ?>
+        <span>Type 2 Answer:</span> <?php echo $row1['Type2']; ?> -->
+        <table class="table">
+          <thead>
+            <tr>
+              <th>SurveyID</th>
+              <th>DateCreated</th>
+              <th>Type1 Answer</th>
+              <th>Type2 Answer</th>
+            </tr>
+          </thead>
+          <tbody>
 
-          <div class="input-field button">
-            <input type="Submit" value="Login" onclick="login_function()" />
-          </div>
-        </form>
+            <tr>
+              <td>001</td>
+              <td>11292022</td>
+              <td>5</td>
+              <td>testing</td>
+                  <a class="Delete" href="/Database_System/delete.php">Delete</a>
+            </tr>
+          </tbody>
+        </table>
 
-        <div class="login-signup">
-          <span class="text">Don't have an account?
-            <a href="#" class="text signup-link">Sign up</a>
-          </span>
-        </div>
+       
       </div>
 
-      <!-- Registration Form -->
-      <div class="form signup">
-        <span class="title">Create your account</span>
+      <button class="logout">Logout</button>
 
-        <br /><br /><span id="register-result" class="invalid"></span>
-        <form id="register-form" onsubmit="return false;" action="#">
-          <div class="input-field">
-            <input name="FirstName" type="text" placeholder="What's your first name?" required />
-            <i class="uil uil-user"></i>
-          </div>
-          <div class="input-field">
-            <input name="LastName" type="text" placeholder="What's your last name?" required />
-            <i class="uil uil-user"></i>
-          </div>
-          <div class="input-field">
-            <input name="Email" type="text" placeholder="What's your email?" required />
-            <i class="uil uil-envelope icon"></i>
-          </div>
-          <div class="input-field">
-            <input name="Password" type="password" class="password" placeholder="Password" required />
-            <i class="uil uil-lock icon"></i>
-          </div>
-          <div class="input-field">
-            <input name="Confirm Password" type="password" class="password" placeholder="Confirm a password" required />
-            <i class="uil uil-lock icon"></i>
-            <i class="uil uil-eye-slash showHidePw"></i>
-          </div>
-
-          <div class="input-field button">
-            <input type="Submit" value="Signup" onclick="register_function()" />
-          </div>
-        </form>
-
-        <div class="login-signup">
-          <span class="text">Already have an account?
-            <a href="#" class="text login-link">Login Now</a>
-          </span>
-        </div>
-      </div>
     </div>
   </div>
 
