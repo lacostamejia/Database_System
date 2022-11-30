@@ -20,14 +20,23 @@ body {
 /* .photo_container {} */
 
 .container {
-  position: relative;
-  max-width: 430px;
-  width: 100%;
+  position: absolute;
+  width:min(100%-15px, 840px);
   background: #fff;
-  border-radius: 10px;
+  border-radius: 20px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  margin: 0 20px;
+  margin-inline: auto;
+}
+
+.logout{
+  background-color: red;
+  color: white;
+  
+}
+
+.logout:hover{
+  filter: brightness(90%);
 }
 
 .container .forms {
