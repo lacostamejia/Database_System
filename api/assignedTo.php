@@ -20,7 +20,7 @@ $inData = json_decode(file_get_contents('php://input'), true);
 // Try to perfrom the query
 try {
 
-      $stmt = $db->prepare("INSERT INTO assigned_to (SurveyID,UserID,Type1,Type2) VALUES (?,?,?,?)");
+      $stmt = $db->prepare("INSERT INTO assigned_to (SurveyID,UserID) VALUES (?,?)");
       $stmt->execute([$inData["SurveyID"], $inData["UserID"], $inData["Type1"], $inData["Type2"]]);
 
       $stmt = $db->prepare("SELECT UserID FROM assigned_to WHERE SurveyID=?");
