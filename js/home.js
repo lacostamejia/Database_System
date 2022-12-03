@@ -175,7 +175,7 @@ function delete_Survey(val) {
     console.log(sendJson);
 
     // Handle api call
-    // var xhr = new XMLHttpRequest();
+    var xhr = new XMLHttpRequest();
     url = urlBase + "/deleteCreatedSurvey." + ext;
     xhr.open("POST", url, true);
     xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
