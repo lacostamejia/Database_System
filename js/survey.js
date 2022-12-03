@@ -12,6 +12,10 @@ const name_survey = document.getElementById("name_survey");
 const first_number = document.getElementById("NumType1");
 const second_number = document.getElementById("NumType2");
 
+//let total_emails = 0;
+
+const emails = [];
+
 
 
 // Returns the cookies attribute: UserID, FirstName, or LastName
@@ -149,7 +153,11 @@ function Next_2(){
                if (this.readyState == 4 && this.status == 200) {
                    // Have to double parse the response to ensure response is turned into object
                    let returnJson = JSON.parse(xhr.responseText);
-                   display_users_emails(returnJson);
+                   //total_emails = returnJson.Emails.length; //Set the total amount of emails.
+                   for(var x = 0; x < returnJson.Emails.length; x++){
+                    emails[x] = returnJson.Emails[x];
+                   }
+                   display_users_emails(emails);
                    // Check for error
                    if (returnJson.error !== "" && returnJson.error !== "No Records Found") {
                        console.log(returnJson.error);
@@ -168,11 +176,23 @@ function Next_2(){
 }
 
 function create(){
-
-    clear();
     
     document.getElementById("creation_wrapper").style.display = "block";
     document.getElementById("assignto_wrapper").style.display = "none";
+    //console.log(total_emails);
+   // console.log(document.getElementById("check0").value);
+
+    //Get the checkmarks selected for all user emails in the list of check + i 
+
+    for(var i = 0; i < emails.length; i++){
+        if(document.getElementById("check" + i).checked){
+            console.log(emails[i]);
+        }
+    }
+
+    clear();
+
+
 
     var li = document.createElement("LI");  
     var input = document.getElementById("name_survey");
@@ -214,13 +234,13 @@ for(var i = 0; i < x; i++){
         
 }
 
-function display_users_emails(returnJson){
+function display_users_emails(emails){
     
     var inputContainer = document.getElementById("assignto_div");
 
     //Pass the array of all emails
 
-    for(var i = 0; i < returnJson.Emails.length; i++){
+    for(var i = 0; i < emails.length; i++){
 
         var newForm = document.createElement("input");
         newForm.setAttribute("type", "checkbox");
@@ -230,7 +250,7 @@ function display_users_emails(returnJson){
     
         var label = document.createElement("label");
         label.setAttribute("for","check" + i);
-        label.innerHTML = returnJson.Emails[i];
+        label.innerHTML = emails[i];
 
         inputContainer.appendChild(label);
         inputContainer.appendChild(document.createElement("br"));
