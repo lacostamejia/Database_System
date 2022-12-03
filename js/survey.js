@@ -1,3 +1,8 @@
+
+const urlBase = "https://petrillo.zone/api";
+const ext = "php";
+
+
 //Setting up questions that will be displayed depending if the selection was made or not
 const first = document.getElementById("first")
 const second = document.getElementById("second");
@@ -6,6 +11,36 @@ const name_survey = document.getElementById("name_survey");
 
 const first_number = document.getElementById("NumType1");
 const second_number = document.getElementById("NumType2");
+
+
+
+// Returns the cookies attribute: UserID, FirstName, or LastName
+function readCookieAttr(attribute) {
+    return document.cookie
+        .split(',')
+        .find((row) => row.startsWith(`${attribute}=`))
+        ?.split('=')[1];
+}
+
+// Return the cookie as an object
+function cookieToObject() {
+
+    const result = {}
+
+    var str = document.cookie;
+    str = str.split(',');
+    for (let i in str) {
+        const cur = str[i].split('=');
+        result[cur[0]] = cur[1];
+    }
+
+    return result;
+}
+
+// Update the cookie's expiration time
+function updateCookie() {
+    var cookie = document.cookie;
+}
 
 
 function Next(){
@@ -95,6 +130,41 @@ function askquestions(x, y){
 function Next_2(){
     document.getElementById("questions_wrapper").style.display = "none";
     document.getElementById("assignto_wrapper").style.display = "block";
+
+    //Call PHP to show all users and pass it as parameter for display_users_emails
+
+       // Handle api call
+
+       let tmp = {};
+
+       const sendJson = JSON.stringify(tmp);
+       var xhr = new XMLHttpRequest();
+       url = urlBase + "/getAllUserEmail." + ext;
+       xhr.open("POST", url, true);
+       xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+       try {
+           // Wait for async return
+           xhr.onreadystatechange = function () {
+               // Handle the return from api
+               if (this.readyState == 4 && this.status == 200) {
+                   // Have to double parse the response to ensure response is turned into object
+                   let returnJson = JSON.parse(xhr.responseText);
+                   display_users_emails(returnJson);
+                   // Check for error
+                   if (returnJson.error !== "" && returnJson.error !== "No Records Found") {
+                       console.log(returnJson.error);
+                       return;
+                   }
+   
+               };
+           }
+           xhr.send(sendJson);
+       } catch (err) {
+           // Display error
+          console.log(err);
+       }
+
+
 }
 
 function create(){
@@ -111,6 +181,60 @@ function create(){
 
     document.getElementById("surveys").appendChild(li);
 
+    
+
+    //Function to send emails to users that were selected.
+
+    //Pass list as parameter from all the users assigned
+    //sendEmail();
+
+
+}
+
+
+//FIX THIS FUNCTION
+function sendEmail() {
+    Email.send({
+      Host: "smtp.gmail.com",
+      Username: "yanirismejia15@hotmail.com",
+      Password: "mexico15",
+      To: 'theluiszone777@gmail.com',
+      From: "yanirismejia15@hotmail.com",
+      Subject: "You have received a survey to complete!",
+      Body: "TESTING",
+    })
+      .then(function (message) {
+        alert("mail sent successfully")
+      });
+  }
+
+const email = 0;
+//Checking if the email was checked or not
+for(var i = 0; i < x; i++){
+        
+}
+
+function display_users_emails(returnJson){
+    
+    var inputContainer = document.getElementById("assignto_div");
+
+    //Pass the array of all emails
+
+    for(var i = 0; i < returnJson.Emails.length; i++){
+
+        var newForm = document.createElement("input");
+        newForm.setAttribute("type", "checkbox");
+        newForm.setAttribute("id","check"+ i);
+        inputContainer.appendChild(newForm);
+
+    
+        var label = document.createElement("label");
+        label.setAttribute("for","check" + i);
+        label.innerHTML = returnJson.Emails[i];
+
+        inputContainer.appendChild(label);
+        inputContainer.appendChild(document.createElement("br"));
+    }
 }
 
 //Function that will clear all input values
@@ -136,6 +260,11 @@ function clear(){
    const myNode2 = document.getElementById("divsecondquestions");
    while (myNode2.firstChild) {
     myNode2.removeChild(myNode2.lastChild);
+   }
+
+   const myNode3 = document.getElementById("assignto_div");
+   while (myNode3.firstChild) {
+    myNode3.removeChild(myNode3.lastChild);
    }
 };
 
