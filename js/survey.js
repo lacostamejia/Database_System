@@ -224,19 +224,19 @@ function create(){
 
     document.getElementById("surveys").appendChild(li);
 
-    if(first_number.value === null){
-        first_number.value == 0;
+
+    if(first_number.value < 1){
+        first_number.value = 0;
     }
-    if(second_number.value === null){
-        second_number.value == 0;
+    if(second_number.value < 1 ){
+        second_number.value = 0;
     }
 
     //Create survey PHP
 
     //Get a function to get the current date:
 
-//readCookieAttr('UserID')
-    var test = {CreatorID: 3, Title : name_survey.value, Description : description_survey.value , StartDate : startdate.value , EndDate : endate.value , NumType1 : first_number.value , NumType2 : second_number.value};
+    var test = {CreatorID: readCookieAttr('UserID'), Title : name_survey.value, Description : description_survey.value , StartDate : startdate.value , EndDate : endate.value , NumType1 : first_number.value , NumType2 : second_number.value};
 
     var obs = new Array();
     var questions1 = "";
@@ -288,9 +288,6 @@ function create(){
     test = Object.assign(test,obj);
 
     console.log(test);
-
-//var test = '{"CreatorID": "3", "Title" : "name_survey.value", "Description" : "description_survey.value", "StartDate" : "startdate" , "EndDate": "endate.value", "NumType1" : "first_number.value" , "NumType2" : "second_number.value"}';
-    //var o = JSON.parse(test);
 
     const sendJson = JSON.stringify(test);
 
