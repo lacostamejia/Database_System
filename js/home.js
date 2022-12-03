@@ -59,6 +59,7 @@ function createdSurveys() {
 
     // Result span for errors
     var result = document.createElement('span');
+    result.setAttribute('id', 'created-survey-error');
     result.classList.add("invalid");
     result.textContent = "";
     createdSurvey.appendChild(result);
@@ -158,5 +159,49 @@ function createdSurveys() {
 }
 
 function delete_Survey(val) {
-    console.log(val);
+    // console.log(val);
+
+    // Result span for errors
+    var result = document.getElementById('created-survey-error');
+    result.textContent = "";
+
+    // Convert to JSON
+    const sendJson = JSON.stringify({ "SurveyID": val});
+    console.log(sendJson);
+
+    // Handle api call
+    var xhr = new XMLHttpRequest();
+    url = urlBase + "/deleteCreatedSurvey." + ext;
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+    try {
+        // Wait for async return
+        xhr.onreadystatechange = function () {
+            // Handle the return from api
+            if (this.readyState == 4 && this.status == 200) {
+                // Have to double parse the response to ensure response is turned into object
+                let returnJson = JSON.parse(xhr.responseText);
+                console.log(returnJson);
+
+                // Check for error
+                if (returnJson.error !== "") {
+                    result.textContent = returnJson.error;
+                    return;
+                }
+
+                // Get row from id
+                const rowID = document.getElementById(`SurveyID=${val}`);
+                rowID.remove();
+
+                // Update cookie expiration time
+                updateCookie();
+            }
+        };
+
+        // Send Json
+        xhr.send(sendJson);
+    } catch (err) {
+        // Display error
+        result.textContent = err.message;
+    }
 }
