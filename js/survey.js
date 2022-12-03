@@ -187,7 +187,7 @@ function Next_2(){
                        return;
                    }
    
-               };
+               }
            };
            xhr.send(sendJson);
        } catch (err) {
@@ -311,8 +311,8 @@ function create(){
                     return;
                 }
 
-            };
-        }
+            }
+        };
         xhr.send(sendJson);
     } catch (err) {
         // Display error
