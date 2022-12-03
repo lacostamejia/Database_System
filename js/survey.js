@@ -188,7 +188,7 @@ function Next_2(){
                    }
    
                };
-           }
+           };
            xhr.send(sendJson);
        } catch (err) {
            // Display error
@@ -216,13 +216,14 @@ function create(){
             //console.log(emails[i]);
         }
     }
-
+/*
     var li = document.createElement("LI");  
     var input = document.getElementById("name_survey");
     li.innerHTML = input.value;
     input.value = "";
 
     document.getElementById("surveys").appendChild(li);
+    */
 
 
     if(first_number.value < 1){
@@ -235,6 +236,8 @@ function create(){
     //Create survey PHP
 
     //Get a function to get the current date:
+
+    console.log(readCookieAttr('UserID'));
 
     var test = {CreatorID: readCookieAttr('UserID'), Title : name_survey.value, Description : description_survey.value , StartDate : startdate.value , EndDate : endate.value , NumType1 : first_number.value , NumType2 : second_number.value};
 
