@@ -176,7 +176,7 @@ function delete_Survey(val) {
 
     // Convert to JSON
     const sendJson = JSON.stringify({ "SurveyID": val});
-    console.log(sendJson);
+    // console.log(sendJson);
 
     // Handle api call
     var xhr = new XMLHttpRequest();
@@ -190,7 +190,7 @@ function delete_Survey(val) {
             if (this.readyState == 4 && this.status == 200) {
                 // Have to double parse the response to ensure response is turned into object
                 let returnJson = JSON.parse(xhr.responseText);
-                console.log(returnJson);
+                // console.log(returnJson);
 
                 // Check for error
                 if (returnJson.error !== "") {
@@ -234,7 +234,7 @@ function participateSurvey() {
 
     // Handle api call
     var xhr = new XMLHttpRequest();
-    url = urlBase + "/getAssignedSurvey." + ext;
+    url = urlBase + "/getAllUserEmail." + ext;
     xhr.open("POST", url, true);
     xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
     try {
@@ -278,30 +278,31 @@ function participateSurvey() {
                 cell.textContent = "Take Survey";
                 row.appendChild(cell);
 
-//                 returnJson.Surveys.forEach(element => {
-//                     // console.log(element);
-//                     let row = document.createElement('tr');
-//                     row.id = `SurveyID=${element.SurveyID}`;
-//                     table.appendChild(row);
+                returnJson.Surveys.forEach(element => {
+                    console.log(element);
+                    let row = document.createElement('tr');
+                    row.id = `SurveyID=${element.SurveyID}`;
+                    table.appendChild(row);
 
-//                     for (const [key, value] of Object.entries(element)) {
-//                         // console.log(`${key}: ${value}`);
+                    for (const [key, value] of Object.entries(element)) {
+                        // console.log(`${key}: ${value}`);
 
-//                         if (key === "SurveyID") {
-//                             let btn = document.createElement('input');
-//                             btn.type = "button";
-//                             btn.className = "del-button";
-//                             btn.value = "Delete";
-//                             btn.onclick = function () { delete_Survey(value) };
-//                             row.appendChild(btn);
-//                             continue;
-//                         }
+                        if (key === "SurveyID") {
+                            let btn = document.createElement('input');
+                            btn.type = "button";
+                            btn.className = "take-survey-button";
+                            btn.value = "Take";
+                            btn.onclick = function() {console.log(location.href);
+                                                        console.log("TakeSurvey.html")};
+                            row.appendChild(btn);
+                            continue;
+                        }
 
-//                         let cell = document.createElement('td');
-//                         cell.textContent = value;
-//                         row.appendChild(cell);
-//                     }
-//                 });
+                        let cell = document.createElement('td');
+                        cell.textContent = value;
+                        row.appendChild(cell);
+                    }
+                });
 
                 // Update cookie expiration time
                 updateCookie();
