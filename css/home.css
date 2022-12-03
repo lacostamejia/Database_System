@@ -92,33 +92,27 @@ table, th, td {
   width: 100%;
   z-index: 1
 }
-
 .display-top {
   top: 0
 }
-
 .display-bottom {
   bottom: 0
 }
-
 .display-topleft {
   position: absolute;
   left: 0;
   top: 0
 }
-
 .display-topright {
   position: absolute;
   right: 0;
   top: 0
 }
-
 .display-bottomleft {
   position: absolute;
   left: 0;
   bottom: 0
 }
-
 .display-bottomright {
   position: absolute;
   right: 0;

@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Survey Report</title>
+  <script type="text/javascript" src="./js/md5.js"></script>
+  <link rel="stylesheet" href="./css/report.css" />
+  <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" />
+  
+</head>
+
+<body>
+  <div class="photo_container"></div>
+  <div class="container">
+    <div class="forms">
+      <div class="form login">
+        
+        <span class="title">Individual Survey Report</span>
+
+        <table class="table">
+
+          <tbody>
+            <!-- <?php
+                $database = new Database();
+                $db = $database->connect();
+                // Headers
+                header('Access-Control-Allow-Origin: *');
+                header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
+                header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, X-Requested-With");
+                header('Content-Type: application/json');
+
+                $result = mysqli_query($con,"SELECT SurveyID,Title,DateCreated,StartDate,EndDate FROM surveys WHERE creatorID=?");
+
+                echo "<table border='1'>
+                <tr>
+                <th>SurveyID</th>
+                <th>Title</th>
+                <th>DateCreated</th>
+                <th>StartDate</th>
+                <th>EndDate</th>
+                </tr>";
+
+                while($row = mysqli_fetch_array($result))
+                {
+                echo "<tr>";
+                echo "<td>" . $row['SurveyID'] . "</td>";
+                echo "<td>" . $row['Title'] . "</td>";
+                echo "<td>" . $row['DateCreated'] . "</td>";
+                echo "<td>" . $row['StartDate'] . "</td>";
+                echo "<td>" . $row['EndDate'] . "</td>";
+                echo "</tr>";
+                }
+                echo "</table>";
+
+                mysqli_close($con);
+                ?>
+             -->
+          </tbody>
+        </table>
+
+        <div class="input-field button">
+          <input type="button" value="Return Home" onclick="location.href='home.html'" />
+        </div>
+       
+      </div>
+
+      
+
+    </div>
+  </div>
+  
+  <script defer src="./js/survey.js"></script>
+</body>
+
+</html>
