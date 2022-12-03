@@ -84,7 +84,7 @@ body {
 }
 
 /* input[type="radio"] {
-  /* display: none; */
+  display: none;
 } */
 
 #signup:checked~.slider-tab {
