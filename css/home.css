@@ -79,7 +79,7 @@ table, th, td {
   text-align: center
 }
 
-.del-button {
+.del-button, .take-survey-button {
   font-size: 14px;
   border: 1px solid;
   text-align: center
