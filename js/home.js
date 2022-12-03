@@ -234,7 +234,7 @@ function participateSurvey() {
 
     // Handle api call
     var xhr = new XMLHttpRequest();
-    url = urlBase + "/getAllUserEmail." + ext;
+    url = urlBase + "/getAssignedSurvey." + ext;
     xhr.open("POST", url, true);
     xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
     try {
@@ -244,7 +244,7 @@ function participateSurvey() {
             if (this.readyState == 4 && this.status == 200) {
                 // Parse returned json
                 let returnJson = JSON.parse(JSON.parse(xhr.responseText));
-                console.log(returnJson);
+                // console.log(returnJson);
 
                 // Check for error
                 if ((returnJson.error !== "" && returnJson.error === "No Assigned Surveys") || returnJson.Surveys == null) {
@@ -279,7 +279,7 @@ function participateSurvey() {
                 row.appendChild(cell);
 
                 returnJson.Surveys.forEach(element => {
-                    console.log(element);
+                    // console.log(element);
                     let row = document.createElement('tr');
                     row.id = `SurveyID=${element.SurveyID}`;
                     table.appendChild(row);
@@ -292,8 +292,7 @@ function participateSurvey() {
                             btn.type = "button";
                             btn.className = "take-survey-button";
                             btn.value = "Take";
-                            btn.onclick = function() {console.log(location.href);
-                                                        console.log("TakeSurvey.html")};
+                            btn.onclick = function() {window.location.href = "takeSurvey.html?SurveyID=" + value};
                             row.appendChild(btn);
                             continue;
                         }
