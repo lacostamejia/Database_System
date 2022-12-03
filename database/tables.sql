@@ -60,8 +60,8 @@ CREATE TABLE assigned_to (
     Type2A4 TEXT(1250),
     Type2A5 TEXT(1250),
     PRIMARY KEY(SurveyID, UserID),
-    FOREIGN KEY (SurveyID) REFERENCES surveys(SurveyID),
-    FOREIGN KEY (UserID) REFERENCES surveys(SurveyID)
+    FOREIGN KEY (SurveyID) REFERENCES surveys(SurveyID) ON DELETE CASCADE,
+    FOREIGN KEY (UserID) REFERENCES users(UserID)
 );
 
 -- Results Table
@@ -78,7 +78,7 @@ CREATE TABLE results (
     Type2A3 TEXT(1250),
     Type2A4 TEXT(1250),
     Type2A5 TEXT(1250),
-    FOREIGN KEY (SurveyID) REFERENCES surveys(SurveyID)
+    FOREIGN KEY (SurveyID) REFERENCES surveys(SurveyID) ON DELETE CASCADE
 );
 
 -- Describe the tables and indexes
