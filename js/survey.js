@@ -8,9 +8,17 @@ const first = document.getElementById("first")
 const second = document.getElementById("second");
 
 const name_survey = document.getElementById("name_survey");
+const description_survey = document.getElementById("description_survey");
+const endate = document.getElementById("end_date");
+const startdate = document.getElementById("start_date");
+
 
 const first_number = document.getElementById("NumType1");
 const second_number = document.getElementById("NumType2");
+
+const all_questions_1 = [];
+const all_questions_2 = [];
+
 
 //let total_emails = 0;
 
@@ -132,6 +140,21 @@ function askquestions(x, y){
 };
 
 function Next_2(){
+
+    for (var x = 0; x < first_number.value; x++){
+        all_questions_1[x] = document.getElementById("Type1Q"+x+1).value;
+    }
+
+    for (var x = 0; x < second_number.value; x++){
+        all_questions_2[x] = document.getElementById("Type2Q"+x+1).value;
+    }
+
+    console.log(all_questions_1);
+    console.log(all_questions_2);
+
+    //Travel for loop TYPE1Q AND TYPE2Q to store in list their values.
+  
+
     document.getElementById("questions_wrapper").style.display = "none";
     document.getElementById("assignto_wrapper").style.display = "block";
 
@@ -175,6 +198,7 @@ function Next_2(){
 
 }
 
+
 function create(){
     
     document.getElementById("creation_wrapper").style.display = "block";
@@ -186,13 +210,12 @@ function create(){
 
     for(var i = 0; i < emails.length; i++){
         if(document.getElementById("check" + i).checked){
-            console.log(emails[i]);
+
+            //SEND EMAIL TO WHO WAS ASSIGNED!!
+            //sendEmail();
+            //console.log(emails[i]);
         }
     }
-
-    clear();
-
-
 
     var li = document.createElement("LI");  
     var input = document.getElementById("name_survey");
@@ -201,14 +224,106 @@ function create(){
 
     document.getElementById("surveys").appendChild(li);
 
-    
+    if(first_number.value === null){
+        first_number.value == 0;
+    }
+    if(second_number.value === null){
+        second_number.value == 0;
+    }
 
-    //Function to send emails to users that were selected.
+    //Create survey PHP
 
-    //Pass list as parameter from all the users assigned
-    //sendEmail();
+    //Get a function to get the current date:
+
+//readCookieAttr('UserID')
+    var test = {CreatorID: 3, Title : name_survey.value, Description : description_survey.value , StartDate : startdate.value , EndDate : endate.value , NumType1 : first_number.value , NumType2 : second_number.value};
+
+    var obs = new Array();
+    var questions1 = "";
+    var questions2 = "";
+
+    for(var x = 0; x < all_questions_1.length; x++){
+        questions1 += "Type1Q" + (x + 1) + ":" + all_questions_1[x] + ",";
+    }
+    questions1 = questions1.substring(0,questions1.length - 1);
+
+    for(var x = 0; x < all_questions_2.length; x++){
+        questions2 += "Type2Q" + (x + 1) + ":" + all_questions_2[x] + ",";
+    }
+
+    questions2 = questions2.substring(0,questions2.length - 1);
+
+    //questions 1
+    var params = questions1;
+
+          var jsonStrig = '{';
+          var items = params.split(',');
+          for (var i = 0; i < items.length; i++) {
+              var current = items[i].split(':');
+              jsonStrig += '"' + current[0] + '":"' + current[1] + '",';
+          }
+          jsonStrig = jsonStrig.substring(0, jsonStrig.length - 1);
+          jsonStrig += '}';
+          console.log(jsonStrig); //[{"domain":"Abcd-E-Group","domaintype":"com","Submit1":"Search"}]
+          var obj = JSON.parse(jsonStrig);
+          console.log(obj.Type1Q1);
+
+    test = Object.assign(test,obj);
+    //questions 2
+
+    params = questions2;
+
+          var jsonStrig = '{';
+          var items = params.split(',');
+          for (var i = 0; i < items.length; i++) {
+              var current = items[i].split(':');
+              jsonStrig += '"' + current[0] + '":"' + current[1] + '",';
+          }
+          jsonStrig = jsonStrig.substring(0, jsonStrig.length - 1);
+          jsonStrig += '}';
+          console.log(jsonStrig); //[{"domain":"Abcd-E-Group","domaintype":"com","Submit1":"Search"}]
+          var obj = JSON.parse(jsonStrig);
+          console.log(obj.Type1Q1);
+
+    test = Object.assign(test,obj);
+
+    console.log(test);
+
+//var test = '{"CreatorID": "3", "Title" : "name_survey.value", "Description" : "description_survey.value", "StartDate" : "startdate" , "EndDate": "endate.value", "NumType1" : "first_number.value" , "NumType2" : "second_number.value"}';
+    //var o = JSON.parse(test);
+
+    const sendJson = JSON.stringify(test);
+
+    var xhr = new XMLHttpRequest();
+    url = urlBase + "/createSurvey." + ext;
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+    try {
+        // Wait for async return
+        xhr.onreadystatechange = function () {
+            // Handle the return from api
+            if (this.readyState == 4 && this.status == 200) {
+                // Have to double parse the response to ensure response is turned into object
+                let returnJson = JSON.parse(xhr.responseText);
+                // Check for error
+                if (returnJson.error !== "" && returnJson.error !== "No Records Found") {
+                    console.log(returnJson.error);
+                    return;
+                }
+
+            };
+        }
+        xhr.send(sendJson);
+    } catch (err) {
+        // Display error
+       console.log(err);
+    }
 
 
+    //$sql = "INSERT INTO surveys (CreatorID,Title,Description,StartDate,EndDate,NumType1,NumType2";
+
+    //Assign to survey PHP
+    clear();
 }
 
 
@@ -268,6 +383,8 @@ function clear(){
    first_number.value = "";
    second_number.value = "";
 
+
+
    document.getElementById("type1").checked = false;
    document.getElementById("type2").checked = false;
    document.getElementById("description_survey").value = "";
@@ -286,6 +403,7 @@ function clear(){
    while (myNode3.firstChild) {
     myNode3.removeChild(myNode3.lastChild);
    }
+
 };
 
 
