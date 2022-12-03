@@ -2,11 +2,14 @@
 const urlBase = "https://petrillo.zone/api";
 const ext = "php";
 
+// Functions to run on page load
 document.addEventListener("DOMContentLoaded", function () {
     welcome_function();
     createdSurveys();
+    participateSurvey();
 });
 
+// Function to get the users' name and display it
 function welcome_function() {
     var username = document.getElementById("user name");
     username.textContent = "";
@@ -17,6 +20,7 @@ function welcome_function() {
     }
 }
 
+// Logout to return to main and delete cookie
 function logout() {
     // Delete cookie
     document.cookie = "UserID=;expires=Thu, 01 Jan 1970 00:00:00 UTC;";
@@ -83,7 +87,7 @@ function createdSurveys() {
                 // console.log(returnJson);
 
                 // Check for error
-                if (returnJson.error !== "" && returnJson.error !== "No Records Found") {
+                if ((returnJson.error !== "" && returnJson.error !== "No Records Found") || returnJson.Surveys == null) {
                     result.textContent = returnJson.error;
                     return;
                 }
@@ -197,6 +201,107 @@ function delete_Survey(val) {
                 // Get row from id
                 const rowID = document.getElementById(`SurveyID=${val}`);
                 rowID.remove();
+
+                // Update cookie expiration time
+                updateCookie();
+            }
+        };
+
+        // Send Json
+        xhr.send(sendJson);
+    } catch (err) {
+        // Display error
+        result.textContent = err.message;
+    }
+}
+
+// Gets and creates a table of user created surveys
+function participateSurvey() {
+
+    // Get the div to create the list
+    var createdSurvey = document.getElementById("assigned-surveys");
+
+    // Result span for errors
+    var result = document.createElement('span');
+    result.setAttribute('id', 'assigned-survey-error');
+    result.classList.add("invalid");
+    result.textContent = "";
+    createdSurvey.appendChild(result);
+
+    // Convert to JSON
+    const sendJson = JSON.stringify({ "UserID": readCookieAttr("UserID")});
+    // console.log(sendJson);
+
+    // Handle api call
+    var xhr = new XMLHttpRequest();
+    url = urlBase + "/getAssignedSurvey." + ext;
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+    try {
+        // Wait for async return
+        xhr.onreadystatechange = function () {
+            // Handle the return from api
+            if (this.readyState == 4 && this.status == 200) {
+                // Parse returned json
+                let returnJson = JSON.parse(JSON.parse(xhr.responseText));
+                console.log(returnJson);
+
+                // Check for error
+                if ((returnJson.error !== "" && returnJson.error === "No Assigned Surveys") || returnJson.Surveys == null) {
+                    result.textContent = returnJson.error;
+                    return;
+                }
+
+                // Turn the returned json to table
+                const table = document.createElement('table');
+                table.classList.add('survey-table');
+                createdSurvey.appendChild(table);
+
+                // Append the row
+                var row = document.createElement('tr');
+                table.appendChild(row);
+
+                // Append each column
+                let cell = document.createElement('td');
+                cell.textContent = "Title";
+                row.appendChild(cell);
+                cell = document.createElement('td');
+                cell.textContent = "Description";
+                row.appendChild(cell);
+                cell = document.createElement('td');
+                cell.textContent = "Start Date";
+                row.appendChild(cell);
+                cell = document.createElement('td');
+                cell.textContent = "End Date";
+                row.appendChild(cell);
+                cell = document.createElement('td');
+                cell.textContent = "Take Survey";
+                row.appendChild(cell);
+
+//                 returnJson.Surveys.forEach(element => {
+//                     // console.log(element);
+//                     let row = document.createElement('tr');
+//                     row.id = `SurveyID=${element.SurveyID}`;
+//                     table.appendChild(row);
+
+//                     for (const [key, value] of Object.entries(element)) {
+//                         // console.log(`${key}: ${value}`);
+
+//                         if (key === "SurveyID") {
+//                             let btn = document.createElement('input');
+//                             btn.type = "button";
+//                             btn.className = "del-button";
+//                             btn.value = "Delete";
+//                             btn.onclick = function () { delete_Survey(value) };
+//                             row.appendChild(btn);
+//                             continue;
+//                         }
+
+//                         let cell = document.createElement('td');
+//                         cell.textContent = value;
+//                         row.appendChild(cell);
+//                     }
+//                 });
 
                 // Update cookie expiration time
                 updateCookie();
