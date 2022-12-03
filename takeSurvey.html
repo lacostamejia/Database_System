@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Survey</title>
+  <link rel="stylesheet" href="./css/survey.css" />
+</head>
+
+<body>
+  <div class="wrapper" id = "creation_wrapper" style="display: block;">
+    <div class="title-text">
+        <h1 id="survey-title" class="title">TITLE OF SURVEY</h1>
+    </div>
+    <div class="title-text">
+        <h2 id="survey-description" style="font-size:15px" class="title">SURVEY DESCRIPTION</h2> 
+    </div>
+
+    <div style="text-align:center">
+        <span id="start-date">Start</span>
+        <span> - </span>
+        <span id="end-date">End </span>
+    </div>
+
+    <div class="form-container">
+      <div class="form-inner">
+        <form action="#" class="login">
+
+
+            <div id="type-1-questions">
+                <div id="type-1-question-1">
+                    <label>Question 1</label><br>
+                    <input type="radio" id="question-1-1" value="1"><label for="1"> 1</label>
+<input type="radio" id="css" name="fav_language" value="CSS">
+<label for="css">CSS</label>
+<input type="radio" id="javascript" name="fav_language" value="JavaScript">
+<label for="javascript">JavaScript</label>
+                    <label for="question-1">1</label><br>
+                </div>
+
+                <div id="first">
+                    <label>Number of Questions (1)</label>
+                    <input type="number" id="quantity" name="quantity" min = "1">
+                </div>
+            </div>
+
+            <div id="type-2-questions">
+                <div id="first" style = "display: none;">
+                    <label for="quantity">Number of Questions (1)</label>
+                    <input type="number" id="quantity" name="quantity" min = "1">
+                  </div>
+            </div>
+
+
+
+          <div id="second" style = "display: none;">
+            <label for="quantity2">Number of Questions (2)</label>
+            <input type="number" id="quantity2" name="quantity2" min = "1" >
+          </div>
+
+
+
+
+
+          <input type="checkbox" id="type1" name="type1" value="type1" onclick="first_choice()">
+            <label for="type1"> True/False</label><br>
+            <input type="checkbox" id="type2" name="type2" value="type2" onclick="second_choice()">
+            <label for="type2"> 1 - 10 Rate</label><br>
+            <input type="checkbox" id="type3" name="type3" value="type3" onclick="third_choice()">
+            <label for="type3"> Text</label><br><br>
+      
+
+
+
+          <div class="field btn">
+            <input type="button" id="btnAdd" value="Save" onclick="Next()" />
+          </div>
+          <div class="field btn">
+            <input type="button" id="btnAdd" value="Submit" onclick="Next()" />
+          </div>
+      </div>
+    </div>
+  </div>
+  <script src="./js/survey.js"></script>
+</body>
+
+</html>
