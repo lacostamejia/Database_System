@@ -88,12 +88,21 @@ function askquestions(x, y){
         }
         second_choice();
     }
-    clear();
 
 
 };
 
+function Next_2(){
+    document.getElementById("questions_wrapper").style.display = "none";
+    document.getElementById("assignto_wrapper").style.display = "block";
+}
+
 function create(){
+
+    clear();
+    
+    document.getElementById("creation_wrapper").style.display = "block";
+    document.getElementById("assignto_wrapper").style.display = "none";
 
     var li = document.createElement("LI");  
     var input = document.getElementById("name_survey");
@@ -102,9 +111,6 @@ function create(){
 
     document.getElementById("surveys").appendChild(li);
 
-
-    document.getElementById("creation_wrapper").style.display = "block";
-    document.getElementById("questions_wrapper").style.display = "none";
 }
 
 //Function that will clear all input values
@@ -120,10 +126,17 @@ function clear(){
 
    document.getElementById("type1").checked = false;
    document.getElementById("type2").checked = false;
+   document.getElementById("description_survey").value = "";
 
-   
+   const myNode = document.getElementById("divfirstquestions");
+   while (myNode.firstChild) {
+     myNode.removeChild(myNode.lastChild);
+   }
 
-
+   const myNode2 = document.getElementById("divsecondquestions");
+   while (myNode2.firstChild) {
+    myNode2.removeChild(myNode2.lastChild);
+   }
 };
 
 
