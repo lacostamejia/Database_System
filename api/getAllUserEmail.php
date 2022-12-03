@@ -34,7 +34,7 @@ try {
         $retValue = '{"Emails": [';
 
         foreach ($result as $value[0]) {
-            $retValue .= "{$value[0]},";
+            $retValue .= "\"{$value[0]}\",";
         }
 
         // Remove the last comma from printing the array
