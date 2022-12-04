@@ -47,12 +47,17 @@ try {
         $sql .= ",a.Type2A{$x}";
     }
 
-    $sql .= " FROM surveys s, assigned_to a WHERE s.SurveyID=? AND a.UserID=?";
+    $sql .= " FROM surveys s, assigned_to a WHERE a.SurveyID=? AND a.UserID=? AND s.SurveyID=?";
 
     $stmt = $db->prepare($sql);
 
+    $exeSql = [];
+    array_push($exeSql, $inData["SurveyID"]);
+    array_push($exeSql, $inData["UserID"]);
+    array_push($exeSql, $inData["SurveyID"]);
+
     // Execute statement and check if true or false
-    if ($stmt->execute([$inData["SurveyID"], $inData["UserID"]])) {
+    if ($stmt->execute($exeSql)) {
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         // Return the surveys
         $retValue = '';
