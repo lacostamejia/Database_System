@@ -1,3 +1,9 @@
+<!-- Cron tab setup
+edit crontask with: crontab -e
+cron task is: 0 0 * * * /usr/bin/php -f /var/www/html/api/cron-submitSurveys.php >> /tmp/result.log
+this wil run cron job every day at midnight and execute this php script, then append echo to result.log
+the php file might need to have execute priveledges using: chmod +x cron-submitSurveys.php
+-->
 <?php
 
 // Setup include for cron since it needs the absolute path
