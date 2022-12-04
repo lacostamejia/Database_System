@@ -1,7 +1,7 @@
 <?php
 
-// Include database class
-include_once './Database.php';
+// Setup include for cron since it needs the absolute path
+include_once '/var/www/html/api/Database.php';
 
 // Instantiate DB & connect
 $database = new Database();
@@ -46,10 +46,10 @@ try {
         if ($stmt->execute([$value])) {
             $message .= " move from SurveyID={$value} - succeded";
             $message .= PHP_EOL;
-            error_log($message, 3, "/var/log/database-systems.log");
+            // error_log($message, 3, "/var/log/database-systems.log");
         } else {
             $message .= " move from SurveyID={$value} - failed";
-            error_log($message, 3, "/var/log/database-systems.log");
+            // error_log($message, 3, "/var/log/database-systems.log");
         }
 
         echo $message;
@@ -68,10 +68,10 @@ try {
         if ($stmt->execute([$value])) {
             $message .= " delete from SurveyID={$value} - succeded";
             $message .= PHP_EOL;
-            error_log($message, 3, "/var/log/database-systems.log");
+            // error_log($message, 3, "/var/log/database-systems.log");
         } else {
             $message .= " delete from SurveyID={$value} - failed";
-            error_log($message, 3, "/var/log/database-systems.log");
+            // error_log($message, 3, "/var/log/database-systems.log");
         }
         echo $message;
     }
