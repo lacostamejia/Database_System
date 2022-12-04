@@ -364,7 +364,7 @@ function create(){
                     //SEND EMAIL TO WHO WAS ASSIGNED!!
                     assigned_to(returnJson.SurveyID,emails_checked[i]);
                     //console.log(emails[i]);
-                    //Send_Email(emails[i]);
+                    Send_Email(emails[i]);
                 }
             
                 console.log(surveyID);
