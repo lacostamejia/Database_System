@@ -61,7 +61,7 @@ try {
   if ($stmt->execute($exeSql)) {
 
     // Return the if insert succeded
-    $retValue = '{"Return":' . 1 . ', "SurveyID":'. $db->lastInsertId() .'"error":""}';
+    $retValue = '{"Return":' . 1 . ', "SurveyID":'. $db->lastInsertId() .', "error":""}';
     echo $retValue;
   } else {
     $retValue = '{"Return":' . 0 . ',"error":"Create Survey Failed"}';
