@@ -390,7 +390,6 @@ function create(){
        console.log(err);
     }
 
-    window.location.href = "home.html";
     
     //Assign to survey PHP
     clear();
@@ -433,6 +432,7 @@ function assigned_to(x, y){
         // Display error
        console.log(err);
     }
+
 
 
 }
@@ -507,6 +507,8 @@ function clear(){
    while (myNode3.firstChild) {
     myNode3.removeChild(myNode3.lastChild);
    }
+
+   window.location.href = "home.html";
 
 };
 
