@@ -57,6 +57,27 @@ function updateCookie() {
 
 function Next(){
 
+    var today = new Date();
+
+    var dd = today.getDate();
+
+    var mm = today.getMonth()+1; 
+    var yyyy = today.getFullYear();
+    if(dd<10) 
+    {
+        dd='0'+dd;
+    } 
+
+    if(mm<10) 
+    {
+        mm='0'+mm;
+    }
+
+    var today_formated = yyyy + "-" + mm + "-" + dd;
+
+    console.log(today_formated);
+    console.log(startdate.value);
+
     if(name_survey.value == ""){
         document.getElementById("name_survey").style.borderColor = "red";
         alert("No name");
@@ -64,6 +85,40 @@ function Next(){
     }
     else{
         document.getElementById("name_survey").style.borderColor = "green";
+    }
+
+    if(startdate.value > endate.value){
+        alert("Error, the start date can't be after the end date")
+        document.getElementById("start_date").style.borderColor = "red";
+        return;
+    }
+    else{
+        document.getElementById("start_date").style.borderColor = "green";
+    }
+    if(startdate.value < today_formated){
+        alert("Error, the start date can't be in the past")
+        document.getElementById("start_date").style.borderColor = "red";
+        return;
+    }
+    else{
+        document.getElementById("start_date").style.borderColor = "green";
+    }
+
+    if(endate < today_formated){
+        alert("Error, the end date can't be in the past")
+        document.getElementById("end_date").style.borderColor = "red";
+        return;
+    }
+    else{
+        document.getElementById("end_date").style.borderColor = "green";
+    }
+    if(description_survey.value == ""){
+        alert("Description is required");
+        document.getElementById("description_survey").style.borderColor = "red";
+        return;
+    }
+    else{
+        document.getElementById("description_survey").style.borderColor = "green";
     }
 
     //Create a if not type of questions where chose
@@ -211,17 +266,7 @@ function create(){
     document.getElementById("creation_wrapper").style.display = "block";
     document.getElementById("assignto_wrapper").style.display = "none";
 
-    //Get the checkmarks selected for all user emails in the list of check + i 
-
-    for(var i = 0; i < emails.length; i++){
-        if(document.getElementById("check" + i).checked){
-
-            //SEND EMAIL TO WHO WAS ASSIGNED!!
-            Send_Email(emails[i]);
-        }
-    }
-
-
+    var SurveyID = "";
 
     if(first_number.value < 1){
         first_number.value = 0;
@@ -236,7 +281,7 @@ function create(){
 
     console.log(readCookieAttr('UserID'));
 
-    var test = {CreatorID: readCookieAttr('UserID'), Title : name_survey.value, Description : description_survey.value , StartDate : startdate.value , EndDate : endate.value , NumType1 : first_number.value , NumType2 : second_number.value};
+    var test = {CreatorID: 3, Title : name_survey.value, Description : description_survey.value , StartDate : startdate.value , EndDate : endate.value , NumType1 : first_number.value , NumType2 : second_number.value};
 
     var obs = new Array();
     var questions1 = "";
@@ -302,6 +347,63 @@ function create(){
             if (this.readyState == 4 && this.status == 200) {
                 // Have to double parse the response to ensure response is turned into object
                 let returnJson = JSON.parse(xhr.responseText);
+                SurveyID = returnJson.SurveyID;
+                console.log(SurveyID);
+                console.log(returnJson);
+                
+                //Get the survey ID and store it to later assign
+
+                // Check for error
+                if (returnJson.error !== "" && returnJson.error !== "No Records Found") {
+                    console.log(returnJson.error);
+                    return;
+                }
+
+            }
+        };
+        xhr.send(sendJson);
+    } catch (err) {
+        // Display error
+       console.log(err);
+    }
+
+     //Get the checkmarks selected for all user emails in the list of check + i 
+    //Assign to php and send emails
+     for(var i = 0; i < emails.length; i++){
+        if(document.getElementById("check" + i).checked){
+
+            //SEND EMAIL TO WHO WAS ASSIGNED!!
+           // assigned_to(SurveyID,emails[i]);
+           // Send_Email(emails[i]);
+        }
+    }
+
+
+    //Assign to survey PHP
+    clear();
+}
+
+
+function assigned_to(x, y){
+ 
+
+    //First call API to get all the UserID based on their emails
+
+    //[$inData["SurveyID"], $inData["UserID"], $inData["Type1"], $inData["Type2"]]
+    test = {SurveyID: x, UserID: y}
+
+    const sendJson = JSON.stringify(test);
+    var xhr = new XMLHttpRequest();
+    url = urlBase + "/assignedTo." + ext;
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+    try {
+        // Wait for async return
+        xhr.onreadystatechange = function () {
+            // Handle the return from api
+            if (this.readyState == 4 && this.status == 200) {
+                // Have to double parse the response to ensure response is turned into object
+                let returnJson = JSON.parse(xhr.responseText);
                 // Check for error
                 if (returnJson.error !== "" && returnJson.error !== "No Records Found") {
                     console.log(returnJson.error);
@@ -317,11 +419,7 @@ function create(){
     }
 
 
-    //Assign to survey PHP
-    clear();
 }
-
-
 function Send_Email(x){
     Email.send({
         SecureToken : "3465e64c-96d7-4f0d-9f10-bb084924bbab",
