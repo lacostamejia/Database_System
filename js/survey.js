@@ -88,6 +88,9 @@ function Next(){
     }
     askquestions(first_number.value,second_number.value);
 
+
+    //TEST send email
+
 };
 
 
@@ -109,7 +112,9 @@ function askquestions(x, y){
             var newForm = document.createElement("input");
             newForm.setAttribute("type", "text");
             newForm.setAttribute("id", "Type1Q"+i+1);
+            newForm.setAttribute('size','40');
             inputContainer.appendChild(newForm);
+            inputContainer.appendChild(document.createElement("br"));
             inputContainer.appendChild(document.createElement("br"));
         }
         first_choice();
@@ -130,7 +135,9 @@ function askquestions(x, y){
             var newForm_2 = document.createElement("input");
             newForm_2.setAttribute("type", "text");
             newForm_2.setAttribute("id", "Type2Q"+i+1);
+            newForm_2.setAttribute('size','40');
             inputContainer_2.appendChild(newForm_2);
+            inputContainer_2.appendChild(document.createElement("br"));
             inputContainer_2.appendChild(document.createElement("br"));
         }
         second_choice();
@@ -203,8 +210,6 @@ function create(){
     
     document.getElementById("creation_wrapper").style.display = "block";
     document.getElementById("assignto_wrapper").style.display = "none";
-    //console.log(total_emails);
-   // console.log(document.getElementById("check0").value);
 
     //Get the checkmarks selected for all user emails in the list of check + i 
 
@@ -212,18 +217,10 @@ function create(){
         if(document.getElementById("check" + i).checked){
 
             //SEND EMAIL TO WHO WAS ASSIGNED!!
-            //sendEmail();
-            //console.log(emails[i]);
+            Send_Email(emails[i]);
         }
     }
-/*
-    var li = document.createElement("LI");  
-    var input = document.getElementById("name_survey");
-    li.innerHTML = input.value;
-    input.value = "";
 
-    document.getElementById("surveys").appendChild(li);
-    */
 
 
     if(first_number.value < 1){
@@ -320,34 +317,23 @@ function create(){
     }
 
 
-    //$sql = "INSERT INTO surveys (CreatorID,Title,Description,StartDate,EndDate,NumType1,NumType2";
-
     //Assign to survey PHP
     clear();
 }
 
 
-//FIX THIS FUNCTION
-function sendEmail() {
+function Send_Email(x){
     Email.send({
-      Host: "smtp.gmail.com",
-      Username: "yanirismejia15@hotmail.com",
-      Password: "mexico15",
-      To: 'theluiszone777@gmail.com',
-      From: "yanirismejia15@hotmail.com",
-      Subject: "You have received a survey to complete!",
-      Body: "TESTING",
-    })
-      .then(function (message) {
-        alert("mail sent successfully")
-      });
-  }
-
-const email = 0;
-//Checking if the email was checked or not
-for(var i = 0; i < x; i++){
-        
+        SecureToken : "3465e64c-96d7-4f0d-9f10-bb084924bbab",
+        To : x,
+        From : "databasesystemgroup11@gmail.com",
+        Subject : "You have receive a task!",
+        Body : "Hi there! " + readCookieAttr("FirstName") + " sent you a survey to complete. The name of the survey is " + name_survey.value + " and the deadline is " + endate.value + "."
+    }).then(
+      //message => alert(message)
+    );
 }
+
 
 function display_users_emails(emails){
     
@@ -388,6 +374,7 @@ function clear(){
    document.getElementById("type1").checked = false;
    document.getElementById("type2").checked = false;
    document.getElementById("description_survey").value = "";
+   document.getElementById("name_survey").value = "";
 
    const myNode = document.getElementById("divfirstquestions");
    while (myNode.firstChild) {
