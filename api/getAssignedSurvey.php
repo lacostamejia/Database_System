@@ -18,17 +18,19 @@ $inData = json_decode(file_get_contents('php://input'), true);
 
 // Try to perfrom the query
 try {
-  // Get information about the surveys the user has created
-  $stmt = $db->prepare("DELETE FROM surveys WHERE SurveyID=?");
+  // Get all of the surveys that is assigned to the user
+  $stmt = $db->prepare("SELECT Title,Description,StartDate,EndDate,SurveyID FROM surveys WHERE SurveyID IN (SELECT SurveyID FROM assigned_to WHERE UserID=?)");
 
   // Execute statement and check if true or false
-  if ($stmt->execute([$inData["SurveyID"]])) {
-
-    // Return the if delete succeded
-    $retValue = '{"Return":' . 1 . ',"error":""}';
-    echo $retValue;
+  if ($stmt->execute([$inData["UserID"]])) {
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+      $data[] = $row;
+    }
+    // Return the array of surveys inside key "Surveys"
+    $retValue = '{"Surveys":' . json_encode($data, JSON_PRETTY_PRINT) . ',"error":""}';
+    echo json_encode($retValue);
   } else {
-    $retValue = '{"Return":' . 0 . ',"error":"Delete Failed"}';
+    $retValue = '{"error":"No Assigned Surveys"}';
     echo $retValue;
   }
 } catch (PDOException $e) {
