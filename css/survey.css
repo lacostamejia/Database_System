@@ -233,3 +233,8 @@ form .btn input[type="button"] {
 #surveys {
   text-align: center;
 }
+
+.invalid {
+  color: red;
+  font-size: 14px;
+}
