@@ -18,11 +18,10 @@ const second_number = document.getElementById("NumType2");
 
 const all_questions_1 = [];
 const all_questions_2 = [];
-
-
 //let total_emails = 0;
 
 const emails = [];
+const emails_checked = [];
 
 
 
@@ -75,8 +74,6 @@ function Next(){
 
     var today_formated = yyyy + "-" + mm + "-" + dd;
 
-    console.log(today_formated);
-    console.log(startdate.value);
 
     if(name_survey.value == ""){
         document.getElementById("name_survey").style.borderColor = "red";
@@ -211,8 +208,8 @@ function Next_2(){
         all_questions_2[x] = document.getElementById("Type2Q"+x+1).value;
     }
 
-    console.log(all_questions_1);
-    console.log(all_questions_2);
+    //console.log(all_questions_1);
+   // console.log(all_questions_2);
 
     //Travel for loop TYPE1Q AND TYPE2Q to store in list their values.
   
@@ -266,7 +263,20 @@ function create(){
     document.getElementById("creation_wrapper").style.display = "block";
     document.getElementById("assignto_wrapper").style.display = "none";
 
-    var SurveyID = "";
+    var surveyID = 0;
+
+
+
+    for(var i = 0; i < emails.length; i++){
+        if(document.getElementById("check" + i).checked){
+            emails_checked[i] = emails[i];      
+        }
+    }
+
+   // console.log(emails_checked.length);
+    //console.log(emails.length);
+
+   
 
     if(first_number.value < 1){
         first_number.value = 0;
@@ -279,7 +289,7 @@ function create(){
 
     //Get a function to get the current date:
 
-    console.log(readCookieAttr('UserID'));
+    //console.log(readCookieAttr('UserID'));
 
     var test = {CreatorID: 3, Title : name_survey.value, Description : description_survey.value , StartDate : startdate.value , EndDate : endate.value , NumType1 : first_number.value , NumType2 : second_number.value};
 
@@ -309,9 +319,9 @@ function create(){
           }
           jsonStrig = jsonStrig.substring(0, jsonStrig.length - 1);
           jsonStrig += '}';
-          console.log(jsonStrig); //[{"domain":"Abcd-E-Group","domaintype":"com","Submit1":"Search"}]
+          //console.log(jsonStrig); //[{"domain":"Abcd-E-Group","domaintype":"com","Submit1":"Search"}]
           var obj = JSON.parse(jsonStrig);
-          console.log(obj.Type1Q1);
+          //console.log(obj.Type1Q1);
 
     test = Object.assign(test,obj);
     //questions 2
@@ -326,9 +336,9 @@ function create(){
           }
           jsonStrig = jsonStrig.substring(0, jsonStrig.length - 1);
           jsonStrig += '}';
-          console.log(jsonStrig); //[{"domain":"Abcd-E-Group","domaintype":"com","Submit1":"Search"}]
+          //console.log(jsonStrig); //[{"domain":"Abcd-E-Group","domaintype":"com","Submit1":"Search"}]
           var obj = JSON.parse(jsonStrig);
-          console.log(obj.Type1Q1);
+          //console.log(obj.Type1Q1);
 
     test = Object.assign(test,obj);
 
@@ -347,8 +357,17 @@ function create(){
             if (this.readyState == 4 && this.status == 200) {
                 // Have to double parse the response to ensure response is turned into object
                 let returnJson = JSON.parse(xhr.responseText);
-                SurveyID = returnJson.SurveyID;
-                console.log(SurveyID);
+                surveyID = returnJson.SurveyID;
+
+                //Assign to php and send emails
+                for(var i = 1; i < emails_checked.length; i++){
+                    //SEND EMAIL TO WHO WAS ASSIGNED!!
+                    assigned_to(returnJson.SurveyID,emails_checked[i]);
+                    //console.log(emails[i]);
+                    //Send_Email(emails[i]);
+                }
+            
+                console.log(surveyID);
                 console.log(returnJson);
                 
                 //Get the survey ID and store it to later assign
@@ -366,32 +385,23 @@ function create(){
         // Display error
        console.log(err);
     }
-
-     //Get the checkmarks selected for all user emails in the list of check + i 
-    //Assign to php and send emails
-     for(var i = 0; i < emails.length; i++){
-        if(document.getElementById("check" + i).checked){
-
-            //SEND EMAIL TO WHO WAS ASSIGNED!!
-           // assigned_to(SurveyID,emails[i]);
-           // Send_Email(emails[i]);
-        }
-    }
-
-
+    
     //Assign to survey PHP
     clear();
 }
 
 
 function assigned_to(x, y){
- 
+
+
 
     //First call API to get all the UserID based on their emails
 
     //[$inData["SurveyID"], $inData["UserID"], $inData["Type1"], $inData["Type2"]]
-    test = {SurveyID: x, UserID: y}
+    test = {SurveyID: x, Email: y}
+    console.log(test);
 
+    
     const sendJson = JSON.stringify(test);
     var xhr = new XMLHttpRequest();
     url = urlBase + "/assignedTo." + ext;
@@ -405,7 +415,7 @@ function assigned_to(x, y){
                 // Have to double parse the response to ensure response is turned into object
                 let returnJson = JSON.parse(xhr.responseText);
                 // Check for error
-                if (returnJson.error !== "" && returnJson.error !== "No Records Found") {
+                if (returnJson.error !== "") {
                     console.log(returnJson.error);
                     return;
                 }
@@ -464,10 +474,13 @@ function clear(){
    document.getElementById("NumType1").style.borderColor = "lightgrey";
    document.getElementById("NumType2").style.borderColor = "lightgrey";
 
+
+   document.getElementById("description_survey").style.borderColor = "lightgrey";
+   document.getElementById("start_date").style.borderColor = "lightgrey";
+   document.getElementById("end_date").style.borderColor = "lightgrey";
+
    first_number.value = "";
    second_number.value = "";
-
-
 
    document.getElementById("type1").checked = false;
    document.getElementById("type2").checked = false;
