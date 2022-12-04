@@ -373,6 +373,8 @@ function create(){
             
                 console.log(surveyID);
                 console.log(returnJson);
+
+                location.href = "home.html";
                 
                 //Get the survey ID and store it to later assign
 
@@ -508,8 +510,6 @@ function clear(){
     myNode3.removeChild(myNode3.lastChild);
    }
 
-
-   location.href = "home.html";
 
 };
 
