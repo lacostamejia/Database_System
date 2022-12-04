@@ -26,7 +26,8 @@ try {
   // Execute statement and check if true or false
   if ($stmt->execute([$inData["Email"]])) {
     // Get the userid
-    $userID = $stmt->fetch(PDO::FETCH_ASSOC);
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    $userID = $row['UserID'];
   } else {
     $retValue = '{"error":"Could Not Assign Survey"}';
     echo $retValue;
@@ -36,7 +37,7 @@ try {
   $stmt = $db->prepare("INSERT INTO assigned_to (SurveyID,UserID) VALUES (?,?)");
 
   // Execute statement and check if succeded
-  if ($stmt->execute([$inData["SurveyID"], $userID])) {
+  if ($stmt->execute($arr = [$inData["SurveyID"], $userID])) {
     $retValue = '{"Return":' . 1 . ', "error":""}';
     echo $retValue;
   } else {
