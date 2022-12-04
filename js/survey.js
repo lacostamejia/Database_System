@@ -265,13 +265,17 @@ function create(){
 
     var surveyID = 0;
 
+    var z = 0;
+
 
 
     for(var i = 0; i < emails.length; i++){
         if(document.getElementById("check" + i).checked){
-            emails_checked[i] = emails[i];      
+            emails_checked[z] = emails[i]; 
+            z++;
         }
     }
+
 
    // console.log(emails_checked.length);
     //console.log(emails.length);
@@ -360,7 +364,7 @@ function create(){
                 surveyID = returnJson.SurveyID;
 
                 //Assign to php and send emails
-                for(var i = 1; i < emails_checked.length; i++){
+                for(var i = 0; i < emails_checked.length; i++){
                     //SEND EMAIL TO WHO WAS ASSIGNED!!
                     assigned_to(returnJson.SurveyID,emails_checked[i]);
                     //console.log(emails[i]);
