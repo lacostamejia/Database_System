@@ -291,7 +291,7 @@ function create(){
 
     //console.log(readCookieAttr('UserID'));
 
-    var test = {CreatorID: 3, Title : name_survey.value, Description : description_survey.value , StartDate : startdate.value , EndDate : endate.value , NumType1 : first_number.value , NumType2 : second_number.value};
+    var test = {CreatorID: readCookieAttr('UserID'), Title : name_survey.value, Description : description_survey.value , StartDate : startdate.value , EndDate : endate.value , NumType1 : first_number.value , NumType2 : second_number.value};
 
     var obs = new Array();
     var questions1 = "";
