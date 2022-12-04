@@ -23,9 +23,9 @@ try {
 
   // Execute statement and check if true or false
   if ($stmt->execute([$inData["UserID"]])) {
-    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {          
-        $data[] = $row;  
-   } 
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+      $data[] = $row;
+    }
     // Return the array of surveys inside key "Surveys"
     $retValue = '{"Surveys":' . json_encode($data, JSON_PRETTY_PRINT) . ',"error":""}';
     echo json_encode($retValue);

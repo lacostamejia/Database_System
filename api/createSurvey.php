@@ -46,7 +46,7 @@ try {
   // Create array of inputs for SQL statment
   $exeSql = [];
   array_push($exeSql, $inData["CreatorID"], $inData["Title"], $inData["Description"], $inData["StartDate"], $inData["EndDate"], $inData["NumType1"], $inData["NumType2"]);
-  
+
   for ($x = 1; $x <= $inData['NumType1']; $x++) {
     array_push($exeSql, $inData["Type1Q{$x}"]);
   }
@@ -57,8 +57,8 @@ try {
 
   $stmt = $db->prepare($sql);
 
-   // Execute statement and check if true or false
-   if ($stmt->execute($exeSql)) {
+  // Execute statement and check if true or false
+  if ($stmt->execute($exeSql)) {
 
     // Return the if insert succeded
     $retValue = '{"Return":' . 1 . ',"error":""}';
@@ -67,7 +67,6 @@ try {
     $retValue = '{"Return":' . 0 . ',"error":"Delete Failed"}';
     echo $retValue;
   }
-
 } catch (PDOException $e) {
   $retValue = '{"error":"' . $e->getMessage() . '"}';
   echo $retValue;

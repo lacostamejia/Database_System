@@ -20,7 +20,7 @@ $inData = json_decode(file_get_contents('php://input'), true);
 try {
   // Get information about the surveys the user has created
   $stmt = $db->prepare("DELETE FROM surveys WHERE SurveyID=?");
-  
+
   // Execute statement and check if true or false
   if ($stmt->execute([$inData["SurveyID"]])) {
 
