@@ -20,16 +20,29 @@ $inData = json_decode(file_get_contents('php://input'), true);
 // Try to perfrom the query
 try {
 
+  // Get the userid based on the email that is sent
+  $stmt = $db->prepare("SELECT UserID FROM users WHERE Email=?");
+
+  // Execute statement and check if true or false
+  if ($stmt->execute([$inData["Email"]])) {
+    // Get the userid
+    $userID = $stmt->fetch(PDO::FETCH_ASSOC);
+  } else {
+    $retValue = '{"error":"Could Not Assign Survey"}';
+    echo $retValue;
+  }
+
+  // Insert into assigned to with the userid and surveyid
   $stmt = $db->prepare("INSERT INTO assigned_to (SurveyID,UserID) VALUES (?,?)");
-  $stmt->execute([$inData["SurveyID"], $inData["UserID"], $inData["Type1"], $inData["Type2"]]);
 
-  $stmt = $db->prepare("SELECT UserID FROM assigned_to WHERE SurveyID=?");
-  $stmt->execute([$inData["SurveyID"]]);
-  $result = $stmt->fetch();
-
-  // Return the users first name, last name, and ID.
-  $retValue = '{"surveyID":' . $result["surveyID"] . ',"UserID":"' . $result["userID"] . '","DateCreated":"' . $result["DateCreated"] . '","error":""}';
-  echo $retValue;
+  // Execute statement and check if succeded
+  if ($stmt->execute([$inData["SurveyID"], $userID])) {
+    $retValue = '{"Return":' . 1 . ', "error":""}';
+    echo $retValue;
+  } else {
+    $retValue = '{"error":"Could Not Assign Survey"}';
+    echo $retValue;
+  }
 } catch (PDOException $e) {
   $retValue = '{"error":"' . $e->getMessage() . '"}';
   echo $retValue;
