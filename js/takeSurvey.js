@@ -290,6 +290,9 @@ function save_survey() {
 
                 // Update cookie expiration time
                 updateCookie();
+
+                // Move back to homepage
+                location.href = "home.html";
             }
         };
 
