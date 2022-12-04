@@ -508,7 +508,8 @@ function clear(){
     myNode3.removeChild(myNode3.lastChild);
    }
 
-   window.location.href = "petrillo.zone/home.html";
+
+   location.href = "home.html";
 
 };
 
