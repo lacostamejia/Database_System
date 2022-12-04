@@ -389,6 +389,8 @@ function create(){
         // Display error
        console.log(err);
     }
+
+    window.location.href = "home.html";
     
     //Assign to survey PHP
     clear();
