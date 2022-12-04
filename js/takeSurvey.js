@@ -147,7 +147,7 @@ function create_type_1_question(parentElement, json, qnum) {
         if (i == checkedAnswer) {
             radioButton.checked = true;
         }
-    
+
         question.appendChild(radioButton);
 
         const radioLabel = document.createElement('label');
@@ -316,5 +316,78 @@ function getQuestionType1Result(elements) {
 
 // Submit survey function
 function submit_survey() {
+    // Warn user that submit will be irreversable
+    if (confirm("Are you sure you want to submit this survey?\nYou will not be able to edit your answers after submitting.") == false) {
+        return;
+    }
 
+    // Get the survey id from the url that is passed and userid from cookie
+    var SurveyID = new URLSearchParams(window.location.search).get('SurveyID');
+    var UserID = readCookieAttr("UserID");
+
+    var dataToSend = { "SurveyID": SurveyID, "UserID": UserID };
+
+    const numType1 = document.getElementById('type-1-questions').childElementCount;
+    // Loop through the number of type 1 questions and get their result
+    for (let i = 1; i <= numType1; i++) {
+        dataToSend[`Type1A${i}`] = getQuestionType1Result(document.getElementsByName(`type-1-question-${i}`));
+        // console.log(getQuestionType1Result(document.getElementsByName(`type-1-question-${i}`)));
+    }
+
+    const numType2 = document.getElementById('type-2-questions').childElementCount
+
+    // Loop through the nuber of type 2 questions and get their result
+    for (let i = 1; i <= numType2; i++) {
+        var textAnswer = document.getElementById(`type-2-question-${i}`).value;
+        if (textAnswer === '') {
+            dataToSend[`Type2A${i}`] = null;
+        }
+        else {
+            dataToSend[`Type2A${i}`] = textAnswer;
+        }
+        // console.log(document.getElementById(`type-2-question-${i}`).value);
+    }
+
+    // Result span for errors
+    var result = document.getElementById('survey-error');
+    result.textContent = "";
+
+    // Convert to JSON
+    const sendJson = JSON.stringify(dataToSend);
+    // console.log(sendJson);
+
+    // Handle api call
+    var xhr = new XMLHttpRequest();
+    url = urlBase + "/submitSurvey." + ext;
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+    try {
+        // Wait for async return
+        xhr.onreadystatechange = function () {
+            // Handle the return from api
+            if (this.readyState == 4 && this.status == 200) {
+                // Parse the response
+                let returnJson = JSON.parse(xhr.responseText);
+                // console.log(returnJson);
+
+                // Check for error
+                if (returnJson.error !== "" && returnJson.error !== "Could Not Submit Survey") {
+                    result.textContent = returnJson.error;
+                    return;
+                }
+
+                // Update cookie expiration time
+                updateCookie();
+
+                // Move back to homepage
+                location.href = "home.html";
+            }
+        };
+
+        // Send Json
+        xhr.send(sendJson);
+    } catch (err) {
+        // Display error
+        result.textContent = err.message;
+    }
 }
