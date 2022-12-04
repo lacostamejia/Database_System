@@ -43,18 +43,17 @@ try {
     }
 
     // Save the survey answers to the assigned_to table
-    $sql = "INSERT INTO results (";
+    $sql = "INSERT INTO results (SurveyID";
 
     for ($x = 1; $x <= $numType1; $x++) {
-        $sql .= "Type1A{$x},";
+        $sql .= ",Type1A{$x}";
     }
 
     for ($x = 1; $x <= $numType2; $x++) {
-        $sql .= "Type2A{$x},";
+        $sql .= ",Type2A{$x}";
     }
 
-    $sql = substr($sql, 0, -1);
-    $sql .= " VALUES (";
+    $sql .= ") VALUES (?,";
 
     for ($x = 1; $x <= $numType1; $x++) {
         $sql .= "?,";
@@ -65,10 +64,12 @@ try {
     }
 
     $sql = substr($sql, 0, -1);
-    $sql .= ") WHERE SurveyID=?";
+    $sql .= ")";
 
     // Create array of inputs for SQL statment
     $exeSql = [];
+
+    array_push($exeSql, $inData["SurveyID"]);
 
     for ($x = 1; $x <= $numType1; $x++) {
         array_push($exeSql, $inData["Type1A{$x}"]);
@@ -77,8 +78,6 @@ try {
     for ($x = 1; $x <= $numType2; $x++) {
         array_push($exeSql, $inData["Type2A{$x}"]);
     }
-
-    array_push($exeSql, $inData["SurveyID"]);
 
     $stmt = $db->prepare($sql);
 
