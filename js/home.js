@@ -285,9 +285,9 @@ function participateSurvey() {
                     table.appendChild(row);
 
                     // Get the dates to see if surveys can be taken
-                    let surveyEnd = new Date(element.EndDate);
-                    let surveyStart = new Date(element.StartDate);
-                    let todaysDate = new Date();
+                    let surveyEnd = new Date(element.EndDate).toLocaleString("en-US", {timeZone: "America/New_York"});
+                    let surveyStart = new Date(element.StartDate).toLocaleString("en-US", {timeZone: "America/New_York"});
+                    let todaysDate = new Date().toLocaleString("en-US", {timeZone: "America/New_York"});
 
                     for (const [key, value] of Object.entries(element)) {
                         // console.log(`${key}: ${value}`);
@@ -298,7 +298,7 @@ function participateSurvey() {
                             btn.className = "take-survey-button";
                             btn.value = "Take";
                             // Set the button to allow the survey or not allow based on date
-                            if (todaysDate < surveyEnd && todaysDate > surveyStart) {
+                            if (todaysDate <= surveyEnd && todaysDate >= surveyStart) {
                                 btn.onclick = function() {window.location.href = "takeSurvey.html?SurveyID=" + value};
                             } else {
                                 btn.onclick = function() {alert("You cannot take this survey it is outside the start or end date.")};
