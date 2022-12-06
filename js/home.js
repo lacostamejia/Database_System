@@ -285,20 +285,31 @@ function participateSurvey() {
                     table.appendChild(row);
 
                     // Get the dates to see if surveys can be taken
-                    let surveyEnd = new Date(element.EndDate);
-                    let surveyStart = new Date(element.StartDate);
-                    let todaysDate = new Date();
+                    let surveyEnd = element.EndDate;
+                    let surveyStart = element.StartDate;
+
+                    // Get the current date and convert to eastern time, then split to only get dates and not time
+                    let todaysDate = new Date().toLocaleString("en-US", {timeZone: "America/New_York"}).split(',')[0];
+                    
+                    // Destructure into month, day and year
+                    let [month, day, year] = todaysDate.split('/');
+
+                    // Fix the month and day values to make sure they have leading 0s if less than 10
+                    month = (month < 10) ? `0${month}` : month;
+                    day = (day < 10) ? `0${day}` : day;
+
+                    // Set todays date in format that is comparable with incoming date
+                    todaysDate = `${year}-${month}-${day}`;
 
                     for (const [key, value] of Object.entries(element)) {
                         // console.log(`${key}: ${value}`);
-
                         if (key === "SurveyID") {
                             let btn = document.createElement('input');
                             btn.type = "button";
                             btn.className = "take-survey-button";
                             btn.value = "Take";
                             // Set the button to allow the survey or not allow based on date
-                            if (todaysDate < surveyEnd && todaysDate > surveyStart) {
+                            if (todaysDate <= surveyEnd && todaysDate >= surveyStart) {
                                 btn.onclick = function() {window.location.href = "takeSurvey.html?SurveyID=" + value};
                             } else {
                                 btn.onclick = function() {alert("You cannot take this survey it is outside the start or end date.")};
