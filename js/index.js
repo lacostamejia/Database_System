@@ -112,8 +112,8 @@ function login_function() {
         // Save cookie using ID, first name, and last name.
         saveCookie();
 
-        // Move to the next html page, home
-        location.href = "home.html";
+        // Move to the next html page surveys
+        location.href = "survey.html";
       }
     };
 
@@ -199,8 +199,8 @@ function register_function() {
         // Save cookie using ID, first name, and last name.
         saveCookie();
 
-        // Move to the next html page, home
-        location.href = "home.html";
+        // Move to the next html page surveys
+        location.href = "survey.html";
       }
     };
 

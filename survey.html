@@ -10,9 +10,7 @@
 </head>
 
 <body>
-
-  <!--Creating Survey-->
-  <div class="wrapper" id = "creation_wrapper" style="display: block;">
+  <div class="wrapper">
     <div class="title-text">
       <div class="title login">Create a Survey</div>
     </div>
@@ -22,109 +20,49 @@
           <div class="field">
             <input type="text" id="name_survey" placeholder="Title of the Survey" required />    
           </div>
-          <form action="#" class="login">
-            <div class="field">
-              <input type="text" id="description_survey" placeholder="Description" required />    
-            </div>
-
-          <div class="field">
-              <label for="start_date">Start date</label>
-              <input type="date" id="start_date" value = "2022-12-06"/>
-          </div>
-          <br>
-
           <div class="field">
             <label for="end_date">End date</label>
-            <input type="date" id="end_date" value = "2022-12-31"/>
+            <input type="date" id="end_date" value = "2022-11-26"/>
           </div>
           <br>
-          <br>
           <p style = "text-align: center;">What type of question?</p>
-          <br>
-          
             <input type="checkbox" id="type1" name="type1" value="type1" onclick="first_choice()">
-            <label for="type1">1 - 5 Rate</label><br>
-
+            <label for="type1"> True/False</label><br>
             <input type="checkbox" id="type2" name="type2" value="type2" onclick="second_choice()">
-            <label for="type2">Text</label><br>
-
-
+            <label for="type2"> 1 - 10 Rate</label><br>
+            <input type="checkbox" id="type3" name="type3" value="type3" onclick="third_choice()">
+            <label for="type3"> Text</label><br><br>
+            
           <div id="first" style = "display: none;">
-            <label for="NumType1">Number of Questions(1)</label>
-            <input type="number" id="NumType1" name="NumType1" min = "1" max = "5">
+            <label for="quantity">Number of Questions (1)</label>
+            <input type="number" id="quantity" name="quantity" min = "1">
           </div>
 
           <div id="second" style = "display: none;">
-            <label for="NumType2">Number of Questions(2)</label>
-            <input type="number" id="NumType2" name="NumType2" min = "1" max = "5">
+            <label for="quantity2">Number of Questions (2)</label>
+            <input type="number" id="quantity2" name="quantity2" min = "1" >
+          </div>
+
+          <div id="third" style = "display: none;">
+            <label for="quantity3">Number of Questions (3)</label>
+            <input type="number" id="quantity3" name="quantity3" min = "1">
           </div>
 
           <div class="field btn">
             <div class="btn-layer"></div>
-            <input type="button" id="btnAdd" value="Next" onclick="Next()" />
+            <input type="button" id="btnAdd" value="Create" onclick="addItem()" />
           </div>
       </div>
     </div>
   </div>
 
-
-  <!----Questions to add!-->
-  <div class="wrapper" id = "questions_wrapper" style="display: none;">
-
-    <div class="title-text">
-      <div class="title login">Insert Questions</div>
-    </div>
-    <br>
-
-    <div class="form-container">
-      <div class="form-inner">
-          <div id="divfirstquestions" style = "display: none; text-align: center;">
-          </div>
-      </div>
-    </div>
-
-    <div class="form-container">
-      <div class="form-inner">        
-        <div id="divsecondquestions" style = "display: none; text-align: center;">
-        </div>
-      </div>
-    </div>
-
-    <div class="field btn" style="text-align: center;">
-      <div class="btn-layer_2"></div>
-      <input type="button" class = "button Next" id="btnCreate" value="Next" onclick="Next_2()" />
-    </div>
-
-    </div>
+  <div class="wrapper_2">
+    <h3 style="color: black; text-align: center; text-decoration: underline">
+      Surveys
+    </h3>
+    <ul id="surveys"></ul>
   </div>
-
-
-  <div class="wrapper" id = "assignto_wrapper" style="display: none;">
-
-    <div class="title-text">
-      <div class="title login">Assign to</div>
-    </div>
-
-    <div class="form-container">
-      <div class="form-inner">
-          <div id="assignto_div" style = "text-align: center;">
-          </div>
-      </div>
-    </div>
-
-    <div class="field btn" style="text-align: center;">
-      <div class="btn-layer_3"></div>
-      <input type="button" class = "button create" id="btnCreate" value="Create" onclick="create()" />
-    </div>
-    </div>
-    
-    <input type="button" class = "homebtn" value="Return Home" onclick="location.href='home.html'" />
-
-  </div>
-
-
   <script src="./js/survey.js"></script>
-  <script src="https://smtpjs.com/v3/smtp.js"></script>
 </body>
 
 </html>

@@ -19,54 +19,18 @@ $inData = json_decode(file_get_contents('php://input'), true);
 
 // Try to perfrom the query
 try {
-  // Create SQL statment
-  $sql = "INSERT INTO surveys (CreatorID,Title,Description,StartDate,EndDate,NumType1,NumType2";
 
-  for ($x = 1; $x <= $inData['NumType1']; $x++) {
-    $sql .= ",Type1Q{$x}";
-  }
+      $stmt = $db->prepare("INSERT INTO surveys (Title,creatorID) VALUES (?,?)");
+      $stmt->execute([$inData["Title"], $inData["creatorID"]]);
 
-  for ($x = 1; $x <= $inData['NumType2']; $x++) {
-    $sql .= ",Type2Q{$x}";
-  }
-
-  $sql .= ") VALUES (?,?,?,?,?,?,?";
-
-  for ($x = 1; $x <= $inData['NumType1']; $x++) {
-    $sql .= ",?";
-  }
-
-  for ($x = 1; $x <= $inData['NumType2']; $x++) {
-    $sql .= ",?";
-  }
-
-  $sql .= ")";
-
-  // Create array of inputs for SQL statment
-  $exeSql = [];
-  array_push($exeSql, $inData["CreatorID"], $inData["Title"], $inData["Description"], $inData["StartDate"], $inData["EndDate"], $inData["NumType1"], $inData["NumType2"]);
-
-  for ($x = 1; $x <= $inData['NumType1']; $x++) {
-    array_push($exeSql, $inData["Type1Q{$x}"]);
-  }
-
-  for ($x = 1; $x <= $inData['NumType2']; $x++) {
-    array_push($exeSql, $inData["Type2Q{$x}"]);
-  }
-
-  $stmt = $db->prepare($sql);
-
-  // Execute statement and check if true or false
-  if ($stmt->execute($exeSql)) {
-
-    // Return the if insert succeded
-    $retValue = '{"Return":' . 1 . ', "SurveyID":'. $db->lastInsertId() .', "error":""}';
-    echo $retValue;
-  } else {
-    $retValue = '{"Return":' . 0 . ',"error":"Create Survey Failed"}';
+      $stmt = $db->prepare("SELECT SurveyID,Title,DateCreated,StartDate,EndDate FROM surveys WHERE creatorID=?");
+      $stmt->execute([$inData["creatorID"]]);
+      $result = $stmt->fetch();
+  
+      // Return the users first name, last name, and ID.
+      $retValue = '{"surveyID":' . $result["surveyID"] . ',"Title":"' . $result["Title"] . '","DateCreated":"' . $result["DateCreated"] . '","error":""}';
+      echo $retValue;
+  } catch (PDOException $e) {
+    $retValue = '{"error":"' . $e->getMessage() . '"}';
     echo $retValue;
   }
-} catch (PDOException $e) {
-  $retValue = '{"error":"' . $e->getMessage() . '"}';
-  echo $retValue;
-}
