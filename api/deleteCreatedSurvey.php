@@ -16,32 +16,19 @@ header('Content-Type: application/json');
 // Convert incoming json to variable
 $inData = json_decode(file_get_contents('php://input'), true);
 
-
 // Try to perfrom the query
 try {
-
-  // Get the userid based on the email that is sent
-  $stmt = $db->prepare("SELECT UserID FROM users WHERE Email=?");
+  // Get information about the surveys the user has created
+  $stmt = $db->prepare("DELETE FROM surveys WHERE SurveyID=?");
 
   // Execute statement and check if true or false
-  if ($stmt->execute([$inData["Email"]])) {
-    // Get the userid
-    $row = $stmt->fetch(PDO::FETCH_ASSOC);
-    $userID = $row['UserID'];
-  } else {
-    $retValue = '{"error":"Could Not Assign Survey"}';
-    echo $retValue;
-  }
+  if ($stmt->execute([$inData["SurveyID"]])) {
 
-  // Insert into assigned to with the userid and surveyid
-  $stmt = $db->prepare("INSERT INTO assigned_to (SurveyID,UserID) VALUES (?,?)");
-
-  // Execute statement and check if succeded
-  if ($stmt->execute($arr = [$inData["SurveyID"], $userID])) {
-    $retValue = '{"Return":' . 1 . ', "error":""}';
+    // Return the if delete succeded
+    $retValue = '{"Return":' . 1 . ',"error":""}';
     echo $retValue;
   } else {
-    $retValue = '{"error":"Could Not Assign Survey"}';
+    $retValue = '{"Return":' . 0 . ',"error":"Delete Failed"}';
     echo $retValue;
   }
 } catch (PDOException $e) {

@@ -16,32 +16,21 @@ header('Content-Type: application/json');
 // Convert incoming json to variable
 $inData = json_decode(file_get_contents('php://input'), true);
 
-
 // Try to perfrom the query
 try {
-
-  // Get the userid based on the email that is sent
-  $stmt = $db->prepare("SELECT UserID FROM users WHERE Email=?");
+  // Get information about the surveys the user has created
+  $stmt = $db->prepare("SELECT Title,Description,StartDate,EndDate,NumType1,NumType2,SurveyID FROM surveys WHERE CreatorID=?");
 
   // Execute statement and check if true or false
-  if ($stmt->execute([$inData["Email"]])) {
-    // Get the userid
-    $row = $stmt->fetch(PDO::FETCH_ASSOC);
-    $userID = $row['UserID'];
+  if ($stmt->execute([$inData["UserID"]])) {
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+      $data[] = $row;
+    }
+    // Return the array of surveys inside key "Surveys"
+    $retValue = '{"Surveys":' . json_encode($data, JSON_PRETTY_PRINT) . ',"error":""}';
+    echo json_encode($retValue);
   } else {
-    $retValue = '{"error":"Could Not Assign Survey"}';
-    echo $retValue;
-  }
-
-  // Insert into assigned to with the userid and surveyid
-  $stmt = $db->prepare("INSERT INTO assigned_to (SurveyID,UserID) VALUES (?,?)");
-
-  // Execute statement and check if succeded
-  if ($stmt->execute($arr = [$inData["SurveyID"], $userID])) {
-    $retValue = '{"Return":' . 1 . ', "error":""}';
-    echo $retValue;
-  } else {
-    $retValue = '{"error":"Could Not Assign Survey"}';
+    $retValue = '{"error":"No Records Found"}';
     echo $retValue;
   }
 } catch (PDOException $e) {
