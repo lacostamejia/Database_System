@@ -18,33 +18,21 @@ $inData = json_decode(file_get_contents('php://input'), true);
 
 // Try to perfrom the query
 try {
-    // Get all user emails
-    $stmt = $db->query("SELECT Title FROM surveys WHERE CreatorID=?");
+    // Get all of the survey information from the results table that has a survey with specific creatorid
+    $stmt = $db->query("SELECT Title,Description,StartDate,EndDate,SurveyID 
+                        FROM surveys WHERE CreatorID=? AND SurveyID IN (SELECT SurveyID FROM results)");
 
-    // Execute query
-    $stmt->execute();
-
-    // Get the results
-    $result = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
-
-    // As long as result isnt empty
-    if (!empty($result)) {
-
-        // Return the list of all emails
-        $retValue = '{"Survey List": [';
-
-        foreach ($result as $value[0]) {
-            $retValue .= "\"$value[0]}\",";
+    // Execute statement and check if true or false
+    if ($stmt->execute([$inData["UserID"]])) {
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $data[] = $row;
         }
 
-        // Remove the last comma from printing the array
-        $retValue = substr($retValue, 0, -1);
-
-        $retValue .= '],"error":""}';
-
-        echo $retValue;
+        // Return the array of surveys inside key "Surveys"
+        $retValue = '{"Surveys":' . json_encode($data, JSON_PRETTY_PRINT) . ',"error":""}';
+        echo json_encode($retValue);
     } else {
-        $retValue = '{"Survey": "","error":"No Surveys available"}';
+        $retValue = '{"error":"Could Not Get Survey Results"}';
         echo $retValue;
     }
 } catch (PDOException $e) {
