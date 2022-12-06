@@ -83,9 +83,9 @@ body {
   transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
-/* input[type="radio"] {
+input[type="radio"] {
   display: none;
-} */
+}
 
 #signup:checked~.slider-tab {
   left: 50%;
@@ -186,7 +186,12 @@ form .btn {
   overflow: hidden;
 }
 
-form .btn .btn-layer .btn-layer_2 .btn-layer_3{
+.btn:hover{
+  filter: brightness(125%);
+}
+
+
+form .btn .btn-layer {
   height: 100%;
   width: 300%;
   position: absolute;
@@ -201,66 +206,8 @@ form .btn .btn-layer .btn-layer_2 .btn-layer_3{
   transition: all 0.4s ease;
 }
 
-.btn:hover{
-  filter: brightness(125%);
-}
-.homebtn:hover{
-  filter: brightness(125%);
-}
-.homebtn{
-  max-width: 150px;
-  width: 100%;
-  height: 5%;
-  border-radius: 5px;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  margin: 0 20px;
-  cursor: pointer;
-  position: absolute;
-  right: 0;
-  top: 0;
-  background-color: #f44336; /* Green */
-  border: none;
-  color: white;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  cursor: pointer;
-}
-
-form .btn:hover .btn-layer .btn-layer_2 .btn-layer_3 {
+form .btn:hover .btn-layer {
   left: 0;
-}
-
-.Next{
-  height: auto;
-  width: 50%;
-  z-index: 1;
-  position: relative;
-  background: none;
-  border: none;
-  background-color: #008CBA;;
-  color: white;
-  padding-left: 0;
-  border-radius: 5px;
-  font-size: 15px;
-  font-weight: 500;
-  cursor: pointer;
-}
-.create {
-  background-color: #4CAF50; /* Green */
-  border: none;
-  color: white;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  height: auto;
-  width: auto;
-
 }
 
 form .btn input[type="button"] {
@@ -290,9 +237,4 @@ form .btn input[type="button"] {
 
 #surveys {
   text-align: center;
-}
-
-.invalid {
-  color: red;
-  font-size: 14px;
 }
