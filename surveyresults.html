@@ -16,37 +16,27 @@
 
 
 
-  <div class="photo_container"></div>
-    <div class="survey list">
-    <!-- results go here -->
-    </div>
-   
-    <div class="container">
-        <div class="input-field button">
-          <input type="button" value="Return Home" onclick="location.href='home.html'" />
-        </div>
-        <div class="forms">
-            <div class="form login">
-        
-                <span class="title">Surveys created</span>
+  <div class="photo_container" style = "text-align: center;"></div>  
+    <div class="container" style = "text-align: center;" >
+      <h1 id="title" style = "text-align: center;"></h1>
 
-                <table class="table">
+                <table class="table" id = "table_results" style = "text-align: center;">
+                  <tbod id = "table_body">
 
-                    <tbody>
-                        
-                    </tbody>
+                  </tbod>
+
                 </table>
 
-       
-       
-            </div>
-
-      
-
+                <form onsubmit="download(this['name'].value)">
+                  <input type="text" name="name" value="Results.txt">
+                  <input type="submit" value="Download">
+                </form>
         </div>
     </div>
+
+    <input type="button" class = "homebtn" value="Return Home" onclick="location.href='home.html'" />
   
-  
+    <script src="./js/surveyresults.js"></script>
 </body>
 
 </html>
