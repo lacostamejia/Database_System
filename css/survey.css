@@ -186,7 +186,7 @@ form .btn {
   overflow: hidden;
 }
 
-form .btn .btn-layer {
+form .btn .btn-layer .btn-layer_2 .btn-layer_3{
   height: 100%;
   width: 300%;
   position: absolute;
@@ -201,8 +201,37 @@ form .btn .btn-layer {
   transition: all 0.4s ease;
 }
 
-form .btn:hover .btn-layer {
+form .btn:hover .btn-layer .btn-layer_2 .btn-layer_3 {
   left: 0;
+}
+
+.Next{
+  height: auto;
+  width: 50%;
+  z-index: 1;
+  position: relative;
+  background: none;
+  border: none;
+  background-color: #008CBA;;
+  color: white;
+  padding-left: 0;
+  border-radius: 5px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.create {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  height: auto;
+  width: auto;
+
 }
 
 form .btn input[type="button"] {
