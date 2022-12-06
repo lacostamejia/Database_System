@@ -19,7 +19,6 @@ $inData = json_decode(file_get_contents('php://input'), true);
 
 // Try to perfrom the query
 try {
-
   // Create SQL statment
   $sql = "INSERT INTO surveys (CreatorID,Title,Description,StartDate,EndDate,NumType1,NumType2";
 

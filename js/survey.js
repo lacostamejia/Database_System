@@ -1,3 +1,13 @@
+//Setting up questions that will be displayed depending if the selection was made or not
+const first = document.getElementById("first")
+const second = document.getElementById("second");
+const third = document.getElementById("third");
+
+const name_survey = document.getElementById("name_survey");
+
+const first_number = document.getElementById("quantity");
+const second_number = document.getElementById("quantity2");
+const third_number = document.getElementById("quantity3");
 
 const urlBase = "https://petrillo.zone/api";
 const ext = "php";
@@ -518,6 +528,7 @@ function clear(){
 function first_choice(){
     if(first.style.display === "none"){
         first.style.display = "block";
+
         
     }
     else{
@@ -533,4 +544,5 @@ function second_choice(){
         second.style.display = "none";
     }
 };
+
 
