@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
     welcome_function();
     createdSurveys();
     participateSurvey();
+    showSurveyResults();
 });
 
 // Function to get the users' name and display it
@@ -315,6 +316,107 @@ function participateSurvey() {
                                 btn.onclick = function() {alert("You cannot take this survey it is outside the start or end date.")};
                             }
 
+                            row.appendChild(btn);
+                            continue;
+                        }
+
+                        let cell = document.createElement('td');
+                        cell.textContent = value;
+                        row.appendChild(cell);
+                    }
+                });
+
+                // Update cookie expiration time
+                updateCookie();
+            }
+        };
+
+        // Send Json
+        xhr.send(sendJson);
+    } catch (err) {
+        // Display error
+        result.textContent = err.message;
+    }
+}
+
+// Display the results of completed surveys
+function showSurveyResults() {
+    
+    // Get the div to create the list
+    var resultSurvey = document.getElementById("completed-surveys");
+
+    // Result span for errors
+    var result = document.createElement('span');
+    result.setAttribute('id', 'result-survey-error');
+    result.classList.add("invalid");
+    result.textContent = "";
+    resultSurvey.appendChild(result);
+
+    // Convert to JSON
+    const sendJson = JSON.stringify({ "UserID": readCookieAttr("UserID")});
+    // console.log(sendJson);
+
+    // Handle api call
+    var xhr = new XMLHttpRequest();
+    url = urlBase + "/surveyresults." + ext;
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+    try {
+        // Wait for async return
+        xhr.onreadystatechange = function () {
+            // Handle the return from api
+            if (this.readyState == 4 && this.status == 200) {
+                // Have to double parse the response to ensure response is turned into object
+                let returnJson = JSON.parse(JSON.parse(xhr.responseText));
+                // console.log(returnJson);
+
+                // Check for error
+                if ((returnJson.error !== "" && returnJson.error !== "Could Not Get Survey Results") || returnJson.Surveys == null) {
+                    result.textContent = returnJson.error;
+                    return;
+                }
+
+                // Turn the returned json to table
+                const table = document.createElement('table');
+                table.classList.add('result-table');
+                resultSurvey.appendChild(table);
+
+                // Append the row
+                var row = document.createElement('tr');
+                table.appendChild(row);
+
+                // Append each column
+                let cell = document.createElement('td');
+                cell.textContent = "Title";
+                row.appendChild(cell);
+                cell = document.createElement('td');
+                cell.textContent = "Description";
+                row.appendChild(cell);
+                cell = document.createElement('td');
+                cell.textContent = "Start Date";
+                row.appendChild(cell);
+                cell = document.createElement('td');
+                cell.textContent = "End Date";
+                row.appendChild(cell);
+                cell = document.createElement('td');
+                cell.textContent = "Go To Results";
+                row.appendChild(cell);
+
+                returnJson.Surveys.forEach(element => {
+                    // console.log(element);
+                    let row = document.createElement('tr');
+                    row.id = `SurveyID=${element.SurveyID}`;
+                    table.appendChild(row);
+
+                    for (const [key, value] of Object.entries(element)) {
+                        // console.log(`${key}: ${value}`);
+
+                        if (key === "SurveyID") {
+                            let btn = document.createElement('input');
+                            btn.type = "button";
+                            btn.className = "result-button";
+                            btn.value = "Result";
+                            btn.onclick = function() {window.location.href = "surveyresults.html?SurveyID=" + value};
                             row.appendChild(btn);
                             continue;
                         }
