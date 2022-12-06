@@ -471,6 +471,7 @@ function display_users_emails(emails){
 
         inputContainer.appendChild(label);
         inputContainer.appendChild(document.createElement("br"));
+        inputContainer.appendChild(document.createElement("br"));
     }
 }
 
@@ -517,6 +518,7 @@ function clear(){
 function first_choice(){
     if(first.style.display === "none"){
         first.style.display = "block";
+        
     }
     else{
         first.style.display = "none";
