@@ -285,13 +285,24 @@ function participateSurvey() {
                     table.appendChild(row);
 
                     // Get the dates to see if surveys can be taken
-                    let surveyEnd = new Date(element.EndDate).toLocaleString("en-US", {timeZone: "America/New_York"});
-                    let surveyStart = new Date(element.StartDate).toLocaleString("en-US", {timeZone: "America/New_York"});
-                    let todaysDate = new Date().toLocaleString("en-US", {timeZone: "America/New_York"});
+                    let surveyEnd = element.EndDate;
+                    let surveyStart = element.StartDate;
+
+                    // Get the current date and convert to eastern time, then split to only get dates and not time
+                    let todaysDate = new Date().toLocaleString("en-US", {timeZone: "America/New_York"}).split(',')[0];
+                    
+                    // Destructure into month, day and year
+                    let [month, day, year] = todaysDate.split('/');
+
+                    // Fix the month and day values to make sure they have leading 0s if less than 10
+                    month = (month < 10) ? `0${month}` : month;
+                    day = (day < 10) ? `0${day}` : day;
+
+                    // Set todays date in format that is comparable with incoming date
+                    todaysDate = `${year}-${month}-${day}`;
 
                     for (const [key, value] of Object.entries(element)) {
                         // console.log(`${key}: ${value}`);
-
                         if (key === "SurveyID") {
                             let btn = document.createElement('input');
                             btn.type = "button";
