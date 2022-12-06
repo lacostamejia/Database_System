@@ -28,8 +28,8 @@ try {
   if (empty($result)) {
 
     // Create a user with the given info
-    $stmt = $db->prepare("INSERT INTO users (FirstName,LastName,Username,Password,Email) VALUES (?,?,?,?,?)");
-    $stmt->execute([$inData["FirstName"], $inData["LastName"], $inData["Username"], $inData["Password"], $inData["Email"]]);
+    $stmt = $db->prepare("INSERT INTO users (FirstName,LastName,Password,Email) VALUES (?,?,?,?,?)");
+    $stmt->execute([$inData["FirstName"], $inData["LastName"], $inData["Password"], $inData["Email"]]);
 
     // Get the ID of the newly created user
     $stmt = $db->prepare("SELECT UserID,FirstName,LastName FROM users WHERE Email=? AND Password=?");
