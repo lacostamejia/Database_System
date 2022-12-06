@@ -25,7 +25,7 @@ try {
                         WHERE r.surveyid=? and s.surveyid=?;");
 
     // Execute statement and check if true or false
-    if ($stmt->execute([$inData["SurveyID"]])) {
+    if ($stmt->execute([$inData["SurveyID"],$inData["SurveyID"]])) {
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $data[] = $row;
         }
