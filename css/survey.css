@@ -186,26 +186,6 @@ form .btn {
   overflow: hidden;
 }
 
-.btn:hover{
-  filter: brightness(125%);
-}
-
-.homebutton{
-  max-width: 150px;
-  width: 100%;
-  
-  padding: auto;
-  border-radius: 5px;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  margin: 0 20px;
-  color: black;
-  cursor: pointer;
-  position: absolute;
-  right: 0;
-  top: 0
-}
- 
 form .btn .btn-layer .btn-layer_2 .btn-layer_3{
   height: 100%;
   width: 300%;
@@ -221,14 +201,7 @@ form .btn .btn-layer .btn-layer_2 .btn-layer_3{
   transition: all 0.4s ease;
 }
 
-
-
-
-
-
-
-
-{
+.btn:hover{
   filter: brightness(125%);
 }
 .homebtn:hover{
