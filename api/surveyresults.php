@@ -20,7 +20,7 @@ $inData = json_decode(file_get_contents('php://input'), true);
 try {
     // Get all of the survey information from the results table that has a survey with specific creatorid
     $stmt = $db->prepare("SELECT Title,Description,StartDate,EndDate,SurveyID 
-                        FROM surveys WHERE CreatorID=? AND SurveyID IN (SELECT SurveyID FROM results)");
+                        FROM surveys WHERE (CreatorID=? AND SurveyID IN (SELECT SurveyID FROM results))");
 
     // Execute statement and check if true or false
     if ($stmt->execute([$inData["UserID"]])) {
